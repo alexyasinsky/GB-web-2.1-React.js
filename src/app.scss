@@ -1,0 +1,15 @@
+.form {
+
+  &__msg {
+    display: block;
+    width: 300px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+  &__user {
+    margin-left: 5px;
+  }
+  button {
+    margin-left: 5px;
+  }
+}
