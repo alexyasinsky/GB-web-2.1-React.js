@@ -1,3 +1,10 @@
+.paper {
+  height: 500px;
+  margin-right: 10px;
+  margin-left: 10px;
+  overflow: auto;
+}
+
 .form {
 
   &__message {
@@ -11,5 +18,14 @@
   }
   button {
     margin-left: 5px;
+  }
+}
+
+.message-item {
+  &_owner {
+    text-align: right;
+  }
+  &_buddy {
+    text-align: left;
   }
 }
