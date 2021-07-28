@@ -19,15 +19,8 @@ function App() {
       }
     }, [messageList])
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        let message = [{
-            isOwner: true,
-            user: user,
-            text: e.target.message.value,
-            time: new Date().toLocaleTimeString()
-        }]
-        setList(messageList.concat(message));
+    function handleSubmit(message) {
+        setList(messageList.concat([message]));
     }
 
     useEffect(() => {
@@ -64,11 +57,10 @@ function App() {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Form handler={handleSubmit} />
+          <Form handler={handleSubmit} user={user} />
         </Grid>
       </Grid>
     </Container>
-
   );
 }
 
