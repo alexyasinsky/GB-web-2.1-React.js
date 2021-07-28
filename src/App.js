@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { List} from "./components/List";
+import List from "./components/List/List";
+import Form from "./components/Form/Form";
 import './app.scss';
+
 
 function App() {
     const [messageList, setList] = useState([]);
@@ -8,8 +10,8 @@ function App() {
     function handleSubmit(e) {
         e.preventDefault();
         let message = [{
-            user: e.target[1].value,
-            text: e.target[0].value
+            user: e.target.user.value,
+            text: e.target.message.value
         }]
         setList(messageList.concat(message));
     }
@@ -27,17 +29,13 @@ function App() {
     }, [messageList])
 
   return (
-      <div className="App">
+      <>
           <h1>Messenger</h1>
           <ul>
               <List list={messageList}/>
           </ul>
-          <form className='form' onSubmit={handleSubmit}>
-              <input type="textarea" name='msg' className='form__msg'/>
-              <label htmlFor="user">User:</label><input type="text" name='user' defaultValue={'Alex'} className='form__user'/>
-              <button type='submit'>Отправить</button>
-          </form>
-    </div>
+         <Form handler={handleSubmit} />
+    </>
   );
 }
 

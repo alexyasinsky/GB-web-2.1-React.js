@@ -1,4 +1,4 @@
-export function List(props) {
+export default function List(props) {
     return props.list.map((message, ind) => (
         <li key={ind}>
             <h3>{message.user}</h3>
