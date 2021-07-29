@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 
-import { Container, Grid, Paper, List } from '@material-ui/core';
+import { Container, Grid, Paper, List, Typography } from '@material-ui/core';
+
 
 import MessageList from "./components/MessageList/MessageList";
 import Form from "./components/Form/Form";
+import ChatList from "./components/ChatList/ChatList";
 import './app.scss';
 
 
@@ -40,11 +42,21 @@ function App() {
   return (
     <Container maxWidth="md">
       <Grid container spacing={2}>
-        <h1>Messenger</h1>
+        <Grid item xs={12}>
+          <Typography
+            variant="h4"
+            align='center'
+          >
+            Messenger
+          </Typography>
+        </Grid>
         <Grid item container xs={12} justifyContent="space-around" >
           <Grid item xs={3}>
             <Paper className='paper'>
-              Список чатов
+              <List>
+                <ChatList>
+                </ChatList>
+              </List>
             </Paper>
           </Grid>
           <Grid item xs={9}>
