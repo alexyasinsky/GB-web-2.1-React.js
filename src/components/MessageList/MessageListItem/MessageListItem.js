@@ -1,6 +1,8 @@
 import ListItemText from '@material-ui/core/ListItemText';
 import {useEffect, useState} from "react";
 
+import './mesageListItem.scss'
+
 
 export default function MessageListItem (props) {
 

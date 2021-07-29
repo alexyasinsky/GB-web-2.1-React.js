@@ -1,6 +1,5 @@
 import { Button, Icon, TextField } from '@material-ui/core';
 
-import { makeStyles } from '@material-ui/core/styles';
 import {useRef, useEffect, useState} from "react";
 
 
@@ -33,22 +32,8 @@ export default function Form(props) {
 	});
 
 
-	const useStyles = makeStyles((theme) => ({
-		button: {
-			margin: theme.spacing(1),
-		},
-		root: {
-			'& .MuiTextField-root': {
-				margin: theme.spacing(1),
-				width: '25ch',
-			},
-		},
-	}));
-
-	const classes = useStyles();
-
 	return (
-		<form className='form' ref={inputRef} onSubmit={createMessage}>
+		<form ref={inputRef} onSubmit={createMessage}>
 			<TextField
 
 				fullWidth={true}
@@ -60,7 +45,6 @@ export default function Form(props) {
 			/>
 			<Button variant="contained"
         color="primary"
-        className={classes.button}
         endIcon={<Icon>send</Icon>}
         type='submit'
         >Отправить
