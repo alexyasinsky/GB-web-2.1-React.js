@@ -1,4 +1,4 @@
-import {List, Paper, Typography} from "@material-ui/core";
+import {List, Paper, Typography, Divider} from "@material-ui/core";
 import { useParams } from 'react-router-dom';
 
 import MessageList from "./components/MessageList";
@@ -54,10 +54,12 @@ export default function Chat() {
 					<Typography
 						variant="h5"
 						color='primary'
+						align='center'
 					>
-						{buddyName}
+						{`${buddyName} на связи`}
 					</Typography>
 				</div>
+				<Divider />
 				<div className={chatClass}>
 					{isDefaultMessageVisible ?
 						<Typography

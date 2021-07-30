@@ -25,7 +25,16 @@ function App() {
 		let list = buddyList.slice();
 		list.splice(list.indexOf(buddy), 1);
 		setBuddyList(list);
+	}
 
+	function addBuddyToList(id) {
+		let list = buddyList.slice();
+		list.unshift({
+			id: id,
+			avatar: faker.image.avatar(),
+			name: faker.name.firstName()
+		});
+		setBuddyList(list);
 	}
 
 	let buddyNames = buddyList.map(buddy => buddy.name);
@@ -50,7 +59,7 @@ function App() {
 						 <Nav
 							 list={buddyList}
 							 delete = {deleteBuddyFromList}
-							 add = 'add'
+							 add = {addBuddyToList}
 						 />
 					  </Grid>
 					  <Grid item xs={9} >

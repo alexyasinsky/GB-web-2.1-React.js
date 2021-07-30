@@ -1,5 +1,6 @@
 import {Paper, Typography} from "@material-ui/core";
 
+import './style.scss';
 
 export default function Main() {
 	return (
