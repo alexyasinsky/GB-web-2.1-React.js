@@ -1,5 +1,6 @@
 import { Container, Grid } from '@material-ui/core';
 import {Route, Switch, Redirect } from "react-router-dom";
+import { useState } from "react";
 
 import Chat from './pages/chat'
 import Main from "./pages/main";
@@ -12,15 +13,22 @@ import faker from 'faker';
 
 function App() {
 
-	const buddyList = Array.from({
+	const [buddyList, setBuddyList] = useState(Array.from({
 		length: 10,
 	}).map(() => ({
-		id: faker.datatype.uuid(),
+		id: faker.phone.phoneNumber(),
 		avatar: faker.image.avatar(),
 		name: faker.name.firstName()
-	}));
+	})));
 
-	const buddyNames = buddyList.map(buddy => buddy.name);
+	function deleteBuddyFromList(buddy) {
+		let list = buddyList.slice();
+		list.splice(list.indexOf(buddy), 1);
+		setBuddyList(list);
+
+	}
+
+	let buddyNames = buddyList.map(buddy => buddy.name);
 
 	function checkBuddyExist(props) {
 		if (buddyNames.includes(props.match.params.buddyName)) {
@@ -39,7 +47,11 @@ function App() {
 			  <Grid container spacing={2}>
 				  <Grid item container xs={12} spacing={2}>
 					  <Grid item xs={3}>
-						 <Nav list={buddyList}/>
+						 <Nav
+							 list={buddyList}
+							 delete = {deleteBuddyFromList}
+							 add = 'add'
+						 />
 					  </Grid>
 					  <Grid item xs={9} >
 						  <Switch>

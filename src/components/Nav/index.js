@@ -6,7 +6,7 @@ import ProfileLink from "./components/ProfileLink";
 import './style.scss';
 
 export default function Nav(props) {
-	const list = props.list;
+	const listProps = props;
 
 	return(
 		<>
@@ -23,7 +23,7 @@ export default function Nav(props) {
 			</Typography>
 			<Paper className='chat__list'>
 				<List >
-					<ChatList list={list}/>
+					<ChatList listProps={listProps}/>
 				</List>
 			</Paper>
 		</>
