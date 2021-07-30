@@ -1,0 +1,16 @@
+.chat {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 350px;
+  overflow: auto;
+
+  &__paper {
+    height: 400px;
+    margin-bottom: 16px;
+  }
+
+  &_empty {
+    align-items: center;
+    justify-content: center;
+  }
+}

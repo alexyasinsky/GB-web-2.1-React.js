@@ -1,78 +1,68 @@
-import { useState, useEffect } from "react";
+import { Container, Grid } from '@material-ui/core';
+import {Route, Switch, Redirect } from "react-router-dom";
 
-import { Container, Grid, Paper, List, Typography } from '@material-ui/core';
+import Chat from './pages/chat'
+import Main from "./pages/main";
+import Profile from "./pages/profile";
+import Nav from "./components/Nav";
+import './style.scss';
+import faker from 'faker';
 
-
-import MessageList from "./components/MessageList/MessageList";
-import Form from "./components/Form/Form";
-import ChatList from "./components/ChatList/ChatList";
-import './app.scss';
 
 
 function App() {
-    const [messageList, setList] = useState([]);
-    const defaultMessage = 'Здесь будут ваши сообщения';
-    const [isDefaultMessageVisible, setVisible] = useState(true);
-    const user = "Alex";
 
-    useEffect(() => {
-      if (messageList.length > 0) {
-        setVisible(false);
-      }
-    }, [messageList])
+	const buddyList = Array.from({
+		length: 10,
+	}).map(() => ({
+		id: faker.datatype.uuid(),
+		avatar: faker.image.avatar(),
+		name: faker.name.firstName()
+	}));
 
-    function handleSubmit(message) {
-        setList(messageList.concat([message]));
-    }
+	const buddyNames = buddyList.map(buddy => buddy.name);
 
-    useEffect(() => {
-        if (messageList.length !==0 && !(messageList[messageList.length - 1].user === 'bot')) {
-            setTimeout(() => {
-                let message = [{
-                    isOwner: false,
-                    user: 'bot',
-                    text: `${messageList[messageList.length - 1].text}?`,
-                    time: new Date().toLocaleTimeString()
-                }];
-                setList(messageList.concat(message));
-            }, 1500);
-        }
-    }, [messageList])
+	function checkBuddyExist(props) {
+		if (buddyNames.includes(props.match.params.buddyName)) {
+			return (
+				<Chat/>
+			)
+		} else {
+			return (
+				<Redirect to="/"/>
+			)
+		}
+	}
 
   return (
-    <Container maxWidth="md">
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography
-            variant="h4"
-            align='center'
-          >
-            Messenger
-          </Typography>
-        </Grid>
-        <Grid item container xs={12} justifyContent="space-around" >
-          <Grid item xs={3}>
-            <Paper className='paper'>
-              <List>
-                <ChatList>
-                </ChatList>
-              </List>
-            </Paper>
-          </Grid>
-          <Grid item xs={9}>
-            <Paper className='paper'>
-              {isDefaultMessageVisible ? defaultMessage : ''}
-              <List>
-                <MessageList list={messageList}/>
-              </List>
-            </Paper>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Form handler={handleSubmit} user={user} />
-        </Grid>
-      </Grid>
-    </Container>
+		  <Container maxWidth="md">
+			  <Grid container spacing={2}>
+				  <Grid item container xs={12} spacing={2}>
+					  <Grid item xs={3}>
+						 <Nav list={buddyList}/>
+					  </Grid>
+					  <Grid item xs={9} >
+						  <Switch>
+							  <Route exact path='/'>
+								 <Main/>
+							  </Route>
+							  <Route
+								  exact path='/chat/:buddyName'
+							    render={
+								    routeProps => checkBuddyExist(routeProps)
+							    }
+							  />
+							  <Route path='/chat/'>
+									<Redirect to="/"/>
+							  </Route>
+							  <Route path='/profile'>
+								  <Profile/>
+							  </Route>
+						  </Switch>
+					  </Grid>
+				  </Grid>
+			  </Grid>
+		  </Container>
   );
 }
 

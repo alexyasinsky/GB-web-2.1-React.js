@@ -1,7 +1,6 @@
 
 import {ListItem, Avatar, ListItemText} from '@material-ui/core';
 
-import './chatListItem.scss';
 
 export default function ChatListItem(props) {
 	const buddy = props.item;
