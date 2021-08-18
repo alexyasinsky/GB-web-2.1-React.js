@@ -1,25 +1,38 @@
 import { useState, useEffect } from "react";
-import { List} from "./components/List";
+
+import { Container, Grid, Paper, List, Typography } from '@material-ui/core';
+
+
+import MessageList from "./components/MessageList/MessageList";
+import Form from "./components/Form/Form";
+import ChatList from "./components/ChatList/ChatList";
 import './app.scss';
+
 
 function App() {
     const [messageList, setList] = useState([]);
+    const defaultMessage = 'Здесь будут ваши сообщения';
+    const [isDefaultMessageVisible, setVisible] = useState(true);
+    const user = "Alex";
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        let message = [{
-            user: e.target[1].value,
-            text: e.target[0].value
-        }]
-        setList(messageList.concat(message));
+    useEffect(() => {
+      if (messageList.length > 0) {
+        setVisible(false);
+      }
+    }, [messageList])
+
+    function handleSubmit(message) {
+        setList(messageList.concat([message]));
     }
 
     useEffect(() => {
         if (messageList.length !==0 && !(messageList[messageList.length - 1].user === 'bot')) {
             setTimeout(() => {
                 let message = [{
+                    isOwner: false,
                     user: 'bot',
-                    text: `${messageList[messageList.length - 1].text}?`
+                    text: `${messageList[messageList.length - 1].text}?`,
+                    time: new Date().toLocaleTimeString()
                 }];
                 setList(messageList.concat(message));
             }, 1500);
@@ -27,17 +40,39 @@ function App() {
     }, [messageList])
 
   return (
-      <div className="App">
-          <h1>Messenger</h1>
-          <ul>
-              <List list={messageList}/>
-          </ul>
-          <form className='form' onSubmit={handleSubmit}>
-              <input type="textarea" name='msg' className='form__msg'/>
-              <label htmlFor="user">User:</label><input type="text" name='user' defaultValue={'Alex'} className='form__user'/>
-              <button type='submit'>Отправить</button>
-          </form>
-    </div>
+    <Container maxWidth="md">
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography
+            variant="h4"
+            align='center'
+          >
+            Messenger
+          </Typography>
+        </Grid>
+        <Grid item container xs={12} justifyContent="space-around" >
+          <Grid item xs={3}>
+            <Paper className='paper'>
+              <List>
+                <ChatList>
+                </ChatList>
+              </List>
+            </Paper>
+          </Grid>
+          <Grid item xs={9}>
+            <Paper className='paper'>
+              {isDefaultMessageVisible ? defaultMessage : ''}
+              <List>
+                <MessageList list={messageList}/>
+              </List>
+            </Paper>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Form handler={handleSubmit} user={user} />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 
