@@ -1,8 +1,9 @@
 import ChatList from "./components/ChatList";
 import { NavLink } from "react-router-dom";
-import { Grid, Paper, List, Typography } from '@material-ui/core';
+import { Grid, Paper, List } from '@material-ui/core';
 
 import ProfileLink from "./components/ProfileLink";
+import ChatListLink from "./components/ChatListLink";
 import BuddyAddForm from "./components/BuddyAddForm";
 
 import './style.scss';
@@ -22,12 +23,9 @@ export default function Nav(props) {
 				</NavLink>
 			</Grid>
 			<Grid item>
-				<Typography
-					variant="h6"
-					align='center'
-				>
-					Чаты
-				</Typography>
+				<Paper className='chat__link'>
+					<ChatListLink/>
+				</Paper>
 			</Grid>
 			<Grid item>
 				<Paper className='chat__list'>

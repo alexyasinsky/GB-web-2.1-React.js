@@ -5,7 +5,7 @@ export default function ProfileLink() {
 
 	const profile = {
 		avatar : faker.image.avatar(),
-		name : 'Alex'
+		name : "Alex's Profile"
 	}
 	return (
 		<div>
