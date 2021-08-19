@@ -1,90 +1,52 @@
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid,  Button, Paper} from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ForumIcon from '@material-ui/icons/Forum';
 import {Route, Switch, Redirect } from "react-router-dom";
-import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
-import Chat from './pages/chat'
-import Main from "./pages/main";
-import Profile from "./pages/profile";
-import Nav from "./components/Nav";
+  
+import Main from './pages new/main';
+import Profile from './pages new/profile';
+import Chats from './pages new/chats';
+
 import './style.scss';
-import faker from 'faker';
 
-
-
-function App() {
-
-	const [buddyList, setBuddyList] = useState(Array.from({
-		length: 10,
-	}).map(() => ({
-		id: faker.phone.phoneNumber(),
-		avatar: faker.image.avatar(),
-		name: faker.name.firstName()
-	})));
-
-	function deleteBuddyFromList(buddy) {
-		let list = buddyList.slice();
-		list.splice(list.indexOf(buddy), 1);
-		setBuddyList(list);
-	}
-
-	function addBuddyToList(id) {
-		let list = buddyList.slice();
-		list.unshift({
-			id: id,
-			avatar: faker.image.avatar(),
-			name: faker.name.firstName()
-		});
-		setBuddyList(list);
-	}
-
-	let buddyNames = buddyList.map(buddy => buddy.name);
-
-	function checkBuddyExist(props) {
-		if (buddyNames.includes(props.match.params.buddyName)) {
-			return (
-				<Chat/>
-			)
-		} else {
-			return (
-				<Redirect to="/"/>
-			)
-		}
-	}
-
+const App = () => {
+  
   return (
-		  <Container maxWidth="md">
-			  <Grid container spacing={2}>
-				  <Grid item container xs={12} spacing={2}>
-					  <Grid item xs={3}>
-						 <Nav
-							 list={buddyList}
-							 delete = {deleteBuddyFromList}
-							 add = {addBuddyToList}
-						 />
-					  </Grid>
-					  <Grid item xs={9} >
-						  <Switch>
-							  <Route exact path='/'>
-								 <Main/>
-							  </Route>
-							  <Route
-								  exact path='/chat/:buddyName'
-							    render={
-								    routeProps => checkBuddyExist(routeProps)
-							    }
-							  />
-							  <Route path='/chat/'>
-									<Redirect to="/"/>
-							  </Route>
-							  <Route path='/profile'>
-								  <Profile/>
-							  </Route>
-						  </Switch>
-					  </Grid>
-				  </Grid>
-			  </Grid>
-		  </Container>
-  );
-}
-
+    <Container maxWidth="md">
+      <Grid container spacing={2} direction="column">
+        <Grid item>
+          <Switch>
+            <Route exact path='/'>
+              <Main/>
+            </Route>
+            <Route path='/profile'>
+              <Profile/>
+            </Route>
+            <Route exact path='/chats/'>
+              <Chats/>
+            </Route>
+          </Switch>
+        </Grid>
+        <Grid item>
+          <Paper>
+            <NavLink to='/'>
+              <Button color="default" startIcon={<HomeIcon />} className='navitab'>Main</Button>
+            </NavLink>
+            <NavLink to='/profile'>
+              <Button color="secondary" startIcon={<AccountCircleIcon />} className='navitab'>Profile</Button>
+            </NavLink>
+            <NavLink to='/chats'>
+              <Button color="primary" startIcon={<ForumIcon />} className='navitab'>Chats</Button>
+            </NavLink>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
+    
+  )
+};
+  
 export default App;
