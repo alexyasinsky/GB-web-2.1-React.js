@@ -1,19 +1,12 @@
-import {Paper, Typography} from "@material-ui/core";
+import Area from '../../components/Area';
 
 import './style.scss';
 
+
 export default function Main() {
-	return (
-		<>
-			<Paper>
-				<div className='main'>
-					<Typography
-						variant="h4"
-						align='center'
-					>
-						Приветствую в Мессенджере
-					</Typography></div>
-			</Paper>
-		</>
-	)
+  return (
+    <Area>
+      Приветствую в мессенджере
+    </Area>
+  )
 }

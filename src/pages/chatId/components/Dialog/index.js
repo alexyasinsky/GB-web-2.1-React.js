@@ -4,11 +4,11 @@ import { useParams } from 'react-router-dom';
 import MessageList from "./components/MessageList";
 import Form from "./components/Form";
 
-import './style.scss';
-
 import {useEffect, useState} from "react";
 
-export default function Chat() {
+import './style.scss';
+
+export default function Dialog() {
 
 	const user = "Alex";
 	const [messageList, setList] = useState([]);

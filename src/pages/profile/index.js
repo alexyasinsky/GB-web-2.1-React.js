@@ -1,18 +1,12 @@
-import {Paper, Typography} from "@material-ui/core";
+import Area from '../../components/Area';
 
 import './style.scss';
 
 export default function Profile() {
 
 	return (
-		<Paper>
-			<div className='profile'>
-				<Typography
-					variant="h4"
-					align='center'
-				>
-					Профиль
-				</Typography></div>
-		</Paper>
+		<Area>
+      Профиль
+    </Area>
 	)
 }

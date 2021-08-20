@@ -1,0 +1,15 @@
+.chats {
+  &__list {
+    height: 515px;
+    margin-bottom: 10px;
+    overflow: auto;
+    width: 215px;
+  }
+
+  &__avatar {
+    margin-right: 10px;
+  }
+}
+
+
+
