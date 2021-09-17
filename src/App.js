@@ -15,7 +15,8 @@ import ChatId from './pages/chatId';
 import './style.scss';
 
 const App = () => {
-  
+
+
   const [buddyList, setBuddyList] = useState(Array.from({
 		length: 10,
 	}).map(() => ({
