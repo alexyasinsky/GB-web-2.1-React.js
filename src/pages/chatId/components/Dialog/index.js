@@ -45,7 +45,7 @@ export default function Dialog() {
 				setList(messageList.concat(message));
 			}, 1500);
 		}
-	}, [messageList])
+	}, [buddyName, messageList])
 
 	return (
 		<>

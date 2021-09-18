@@ -9,12 +9,12 @@ import './style.scss';
 
 export default function Profile() {
 
-	const { showName, name } = useSelector((state) => state);
+	const { showName, name } = useSelector((state) => state.profile);
 	const dispatch = useDispatch();
 	console.log(showName);
 
 	const setShowName = useCallback(() => {
-		dispatch(toggleShowName);
+		dispatch(toggleShowName());
 	}, [dispatch]);
 
 
