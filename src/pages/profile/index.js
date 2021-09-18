@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { toggleShowName } from "../../store/profile_page/actions";
+import { toggleShowName } from "../../store/profile/actions";
 
 import Area from '../../components/Area';
 

@@ -8,27 +8,21 @@ import Area from '../../components/Area';
 import './style.scss';
 
 
-export default function Chats(props) {
+export default function Chats() {
 
-  const buddyList = props.list;
-  const deleteBuddyFromList = props.delete;
-  const addBuddyToList = props.add;
-  
+
   return (
     <Grid item container xs={12} >
       <Grid item container xs={3} >
         <Grid item>
           <Paper className='chats__list'>
             <List >
-              <ChatList 							 
-                list={buddyList}
-                delete = {deleteBuddyFromList}
-              />
+              <ChatList/>
             </List>
           </Paper>
         </Grid>
         <Grid item>
-          <BuddyAddForm add={addBuddyToList}/>
+          <BuddyAddForm/>
         </Grid>
       </Grid>
       <Grid item xs={9}>
