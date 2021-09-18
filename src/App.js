@@ -17,10 +17,10 @@ const App = () => {
 
 	const buddyList = useSelector(state => state.chats);
 
-	let buddyNames = buddyList.map(buddy => buddy.name);
+	let buddyIds = buddyList.map(buddy => buddy.id);
 
 	function checkBuddyExist(props) {
-		if (buddyNames.includes(props.match.params.buddyName)) {
+		if (buddyIds.includes(props.match.params.buddyId)) {
 			return (
 				<ChatId />
 			)
@@ -45,7 +45,7 @@ const App = () => {
 						<Chats/>
 					</Route>
 					<Route
-						exact path='/chats/:buddyName'
+						exact path='/chats/:buddyId'
 						render={
 							routeProps => checkBuddyExist(routeProps)
 						}

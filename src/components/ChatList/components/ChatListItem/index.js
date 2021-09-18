@@ -22,7 +22,7 @@ export default function ChatListItem(props) {
 	return (
 
 		<ListItem button>
-			<NavLink key={buddy.id} to={`/chats/${buddy.name}`} className='chats__link'>
+			<NavLink key={buddy.id} to={`/chats/${buddy.id}`} className='chats__link'>
 				<Avatar alt={buddy.name} src={buddy.avatar} className='chats__avatar' />
 				<ListItemText
 					primary={buddy.name}

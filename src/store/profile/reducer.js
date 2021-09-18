@@ -13,6 +13,6 @@ export const profileReducer = (state = initialState, action) => {
 				showName: !state.showName
 			}
 		default:
-			return state
+			return state;
 	}
 }
