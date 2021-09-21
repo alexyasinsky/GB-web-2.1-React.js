@@ -5,23 +5,23 @@ import './style.scss'
 
 
 export default function MessageListItem (props) {
-
+	const message = props.message;
 	const [itemClass, setItemClass] = useState('');
 
 	useEffect(() => {
-		if (props.message.isOwner) {
+		if (message.isOwner) {
 			setItemClass('message-item_owner');
 		} else {
 			setItemClass('message-item_buddy');
 		}
-	}, [props])
+	}, [message])
 
 
 	return (
 			<ListItemText
 				className={itemClass}
-				primary={props.message.text}
-				secondary={`${props.message.user}: ${props.message.time}`}
+				primary={message.text}
+				secondary={`${message.user}: ${message.time}`}
 			/>
 	)
 }

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import MessageList from "./components/MessageList";
 import Form from "./components/Form";
 
-import {useEffect, useState} from "react";
+import {useEffect, useState, useMemo } from "react";
 
 import './style.scss';
 import {useSelector, useDispatch } from "react-redux";
@@ -25,7 +25,9 @@ export default function Dialog() {
 	const messages = useSelector(state => state.messages.messagesList);
 	console.log(messages);
 
-	const messageList = messages[buddyId] || [];
+	const messageList = useMemo(() => {
+		return messages[buddyId] || [];
+	}, [messages, buddyId]);
 
 	function getBuddyNameById (id, list) {
 		let name = '';
@@ -54,16 +56,16 @@ export default function Dialog() {
 	useEffect(() => {
 		if (messageList.length !==0 && !(messageList[messageList.length - 1].user === buddyName)) {
 			setTimeout(() => {
-				let message = [{
+				let message = {
 					isOwner: false,
 					user: buddyName,
 					text: `${messageList[messageList.length - 1].text}?`,
 					time: new Date().toLocaleTimeString()
-				}];
+				};
 				dispatch(addMessage(buddyId, message));
 			}, 1500);
 		}
-	}, [buddyName, messageList])
+	}, [buddyName, dispatch, messageList, buddyId])
 
 	return (
 		<>
