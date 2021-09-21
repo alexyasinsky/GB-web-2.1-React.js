@@ -12,10 +12,11 @@ import Chats from './pages/chats';
 import ChatId from './pages/chatId';
 
 import './style.scss';
+import {getChats} from "./store/chats/selectors";
 
 const App = () => {
 
-	const buddyList = useSelector(state => state.chats);
+	const buddyList = useSelector(getChats);
 
 	let buddyIds = buddyList.map(buddy => buddy.id);
 

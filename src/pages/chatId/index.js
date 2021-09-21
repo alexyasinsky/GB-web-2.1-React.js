@@ -8,11 +8,8 @@ import Dialog from "./components/Dialog";
 import './style.scss';
 
 
-export default function ChatId(props) {
+export default function ChatId() {
 
-  const buddyList = props.list;
-  const deleteBuddyFromList = props.delete;
-  const addBuddyToList = props.add;
   
   return (
     <Grid item container xs={12} >
@@ -20,15 +17,12 @@ export default function ChatId(props) {
         <Grid item>
           <Paper className='chats__list'>
             <List >
-              <ChatList 							 
-                list={buddyList}
-                delete = {deleteBuddyFromList}
-              />
+              <ChatList/>
             </List>
           </Paper>
         </Grid>
         <Grid item>
-          <BuddyAddForm add={addBuddyToList}/>
+          <BuddyAddForm/>
         </Grid>
       </Grid>
       <Grid item xs={9}>

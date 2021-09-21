@@ -9,10 +9,12 @@ import {useEffect, useState, useMemo } from "react";
 import './style.scss';
 import {useSelector, useDispatch } from "react-redux";
 import {addMessage} from "../../../../store/messages/actions";
+import {getMessages} from "../../../../store/messages/selectors";
+import {getProfileName} from "../../../../store/profile/selectors";
 
 export default function Dialog() {
 
-	const user = useSelector(state => state.profile.name);
+	const user = useSelector(getProfileName);
 
 	const [isDefaultMessageVisible, setVisible] = useState(true);
 	const [chatClass, setChatClass] = useState('chat chat_empty');
@@ -22,7 +24,7 @@ export default function Dialog() {
 	const { buddyId } = useParams();
 
 	const dispatch = useDispatch();
-	const messages = useSelector(state => state.messages.messagesList);
+	const messages = useSelector(getMessages);
 	console.log(messages);
 
 	const messageList = useMemo(() => {
