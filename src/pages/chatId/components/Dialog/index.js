@@ -8,7 +8,7 @@ import {useEffect, useState, useMemo } from "react";
 
 import './style.scss';
 import {useSelector, useDispatch } from "react-redux";
-import {addMessage} from "../../../../store/messages/actions";
+import {addMessageWithThunk} from "../../../../store/messages/actions";
 import {getMessages} from "../../../../store/messages/selectors";
 import {getProfileName} from "../../../../store/profile/selectors";
 
@@ -25,7 +25,6 @@ export default function Dialog() {
 
 	const dispatch = useDispatch();
 	const messages = useSelector(getMessages);
-	console.log(messages);
 
 	const messageList = useMemo(() => {
 		return messages[buddyId] || [];
@@ -52,22 +51,8 @@ export default function Dialog() {
 
 
 	function handleSubmit(message) {
-		dispatch(addMessage(buddyId, message));
+		dispatch(addMessageWithThunk(buddyId, message, user, buddyName));
 	}
-
-	useEffect(() => {
-		if (messageList.length !==0 && !(messageList[messageList.length - 1].user === buddyName)) {
-			setTimeout(() => {
-				let message = {
-					isOwner: false,
-					user: buddyName,
-					text: `${messageList[messageList.length - 1].text}?`,
-					time: new Date().toLocaleTimeString()
-				};
-				dispatch(addMessage(buddyId, message));
-			}, 1500);
-		}
-	}, [buddyName, dispatch, messageList, buddyId])
 
 	return (
 		<>
