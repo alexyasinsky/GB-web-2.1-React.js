@@ -2,7 +2,7 @@ import { Grid, Paper, List } from '@material-ui/core';
 
 
 import ChatList from "../../components/ChatList";
-import BuddyAddForm from "../../components/BuddyAddForm";
+import BuddyAddFormContainer from "../../components/BuddyAddFormContainer";
 import Area from '../../components/Area';
 
 import './style.scss';
@@ -22,7 +22,7 @@ export default function Chats() {
           </Paper>
         </Grid>
         <Grid item>
-          <BuddyAddForm/>
+          <BuddyAddFormContainer/>
         </Grid>
       </Grid>
       <Grid item xs={9}>

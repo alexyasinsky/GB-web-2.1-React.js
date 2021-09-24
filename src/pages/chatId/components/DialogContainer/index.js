@@ -1,8 +1,8 @@
 import {List, Paper, Typography, Divider} from "@material-ui/core";
 import { useParams } from 'react-router-dom';
 
-import MessageList from "./components/MessageList";
-import Form from "./components/Form";
+import MessageList from "./components/MessageListComp";
+import Form from "./components/FormContainer";
 
 import {useEffect, useState, useMemo } from "react";
 
