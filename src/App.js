@@ -13,7 +13,7 @@ import Main from './pages/main';
 import Profile from './pages/profile';
 import Chats from './pages/chats';
 import ChatId from './pages/chatId';
-import {Duck} from "./pages/duck";
+import {Beer} from "./pages/beer";
 
 import './style.scss';
 import {getChats} from "./store/chats/selectors";
@@ -45,8 +45,8 @@ const App = () => {
 					<Route path='/profile'>
 						<Profile/>
 					</Route>
-					<Route path='/duck'>
-						<Duck/>
+					<Route path='/beer'>
+						<Beer/>
 					</Route>
 					<Route exact path='/chats'>
 						<Chats/>
@@ -67,8 +67,8 @@ const App = () => {
 						<NavLink to='/profile'>
 							<Button color="secondary" startIcon={<AccountCircleIcon />} className='navitab'>Profile</Button>
 						</NavLink>
-						<NavLink to='/duck'>
-								<Button  startIcon={<Favorite />} color={"default"} className='navitab'>Покажи новую утку!</Button>
+						<NavLink to='/beer'>
+								<Button  startIcon={<Favorite />} color={"default"} className='navitab'>Подобрать пивко на вечер =)</Button>
 						</NavLink>
 						<NavLink to='/chats'>
 							<Button color="primary" startIcon={<ForumIcon />} className='navitab'>Chats</Button>
