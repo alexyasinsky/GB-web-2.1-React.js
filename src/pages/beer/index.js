@@ -3,8 +3,8 @@ import {useRequestApi} from "../../hooks/useRequestApi";
 import {beerApi} from "../../api";
 import {Button} from "@material-ui/core";
 
-import { getBeerFromRestApi } from '../../store/beer/actions';
-import {useDispatch} from "react-redux";
+import {getBeer, getBeerStarted} from '../../store/beer/actions';
+import {useDispatch, useSelector} from "react-redux";
 
 import './style.scss';
 import { useEffect } from 'react';
@@ -21,9 +21,12 @@ export function Beer() {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getBeerFromRestApi(beerApi.getBeer));
-  // })
+  const randomBeer2 = useSelector(state => state.beer.randomBeer);
+	console.log(randomBeer2);
+	useEffect(()=> {
+		dispatch(getBeer());
+	}, [dispatch])
+
 
 
 	return (

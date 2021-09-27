@@ -6,7 +6,7 @@ export const addMessage = (id, message) => ({
 	message
 });
 
-export const addMessageWithThunk = (id, message, user, buddy) => (dispatch, getState) => {
+export const addMessageWithThunk = (id, message, user, buddy) => (dispatch) => {
   dispatch(addMessage(id, message));
   if (message.user === user) {
     const botMessage = {
