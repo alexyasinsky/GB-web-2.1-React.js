@@ -1,3 +1,5 @@
+import { beerApi} from '../../api/requests/beer';
+
 export const GET_BEER_STARTED = 'BEER::GET_BEER_STARTED';
 export const GET_BEER_SUCCESS = 'BEER::GET_BEER_SUCCESS';
 export const GET_BEER_FAILURE = 'BEER::GET_BEER_FAILURE';
@@ -22,10 +24,9 @@ export const getBeerFailure = error => ({
 
 export const getBeer = () => (dispatch, getState) => {
     dispatch(getBeerStarted());
-    fetch('https://api.punkapi.com/v2/beers/random')
-      .then(res => res.json())
+    beerApi.getBeerQuery()
       .then(data => {
-        dispatch(getBeerSuccess(data[0]));
+        dispatch(getBeerSuccess(data[1][0]));
       })
       .catch(err => dispatch(getBeerFailure(err)))
 }
