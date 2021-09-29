@@ -1,20 +1,21 @@
 import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { toggleShowName } from "../../store/profile_page/actions";
+import { toggleShowName } from "../../store/profile/actions";
 
 import Area from '../../components/Area';
 
 import './style.scss';
+import {getProfile} from "../../store/profile/selectors";
 
 export default function Profile() {
 
-	const { showName, name } = useSelector((state) => state);
+	const { showName, name } = useSelector(getProfile);
 	const dispatch = useDispatch();
 	console.log(showName);
 
 	const setShowName = useCallback(() => {
-		dispatch(toggleShowName);
+		dispatch(toggleShowName());
 	}, [dispatch]);
 
 

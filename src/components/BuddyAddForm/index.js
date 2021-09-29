@@ -1,13 +1,19 @@
 import { TextField, Button, Grid } from '@material-ui/core';
-import { useState } from 'react';
+import {useCallback, useState} from 'react';
+
+import {useDispatch} from "react-redux";
+import {addChat} from "../../store/chats/actions";
 
 import './style.scss';
 
-export default function BuddyAddForm(props) {
-
-	const addBuddy = props.add;
+export default function BuddyAddForm() {
 
 	const [id, setId] = useState('');
+	const dispatch = useDispatch();
+	const addBuddy = useCallback( () => {
+		dispatch(addChat(id));
+	}, [dispatch, id]);
+
 
 	const handleId = (event) => {
 		setId(event.target.value);

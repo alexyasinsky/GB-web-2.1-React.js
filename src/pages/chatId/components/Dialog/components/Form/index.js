@@ -31,7 +31,7 @@ export default function Form(props) {
 		if (message) {
 			handler(message);
 		}
-	}, [message])
+	}, [message]) // при добавлении handler в зависимости приложение ломается (создается бесконечное количество сообщений)
 
 
 	return (

@@ -4,19 +4,44 @@ import { useParams } from 'react-router-dom';
 import MessageList from "./components/MessageList";
 import Form from "./components/Form";
 
-import {useEffect, useState} from "react";
+import {useEffect, useState, useMemo } from "react";
 
 import './style.scss';
+import {useSelector, useDispatch } from "react-redux";
+import {addMessage} from "../../../../store/messages/actions";
+import {getMessages} from "../../../../store/messages/selectors";
+import {getProfileName} from "../../../../store/profile/selectors";
 
 export default function Dialog() {
 
-	const user = "Alex";
-	const [messageList, setList] = useState([]);
+	const user = useSelector(getProfileName);
 
 	const [isDefaultMessageVisible, setVisible] = useState(true);
-	const [chatClass, setChatClass] = useState('chat chat_empty')
+	const [chatClass, setChatClass] = useState('chat chat_empty');
 
-	const { buddyName } = useParams();
+	const chatList = useSelector(state => state.chats);
+
+	const { buddyId } = useParams();
+
+	const dispatch = useDispatch();
+	const messages = useSelector(getMessages);
+	console.log(messages);
+
+	const messageList = useMemo(() => {
+		return messages[buddyId] || [];
+	}, [messages, buddyId]);
+
+	function getBuddyNameById (id, list) {
+		let name = '';
+		list.forEach(chat => {
+			if (chat.id === id) {
+				name = chat.name;
+			}
+		});
+		return name;
+	}
+
+	const buddyName = getBuddyNameById(buddyId, chatList);
 
 	useEffect(() => {
 		if (messageList.length > 0) {
@@ -25,27 +50,24 @@ export default function Dialog() {
 		}
 	}, [messageList])
 
-	useEffect(() => {
-		setList([]);
-	}, [buddyName])
 
 	function handleSubmit(message) {
-		setList(messageList.concat([message]));
+		dispatch(addMessage(buddyId, message));
 	}
 
 	useEffect(() => {
 		if (messageList.length !==0 && !(messageList[messageList.length - 1].user === buddyName)) {
 			setTimeout(() => {
-				let message = [{
+				let message = {
 					isOwner: false,
 					user: buddyName,
 					text: `${messageList[messageList.length - 1].text}?`,
 					time: new Date().toLocaleTimeString()
-				}];
-				setList(messageList.concat(message));
+				};
+				dispatch(addMessage(buddyId, message));
 			}, 1500);
 		}
-	}, [messageList])
+	}, [buddyName, dispatch, messageList, buddyId])
 
 	return (
 		<>
