@@ -6,13 +6,14 @@ import {useDispatch, useSelector} from "react-redux";
 
 import './style.scss';
 import { useEffect } from 'react';
+import {getRandomBeer} from "../../store/beer/selectors";
 
 
 export function Beer() {
 
   const dispatch = useDispatch();
 
-  const {isLoading, isError, randomBeer } = useSelector(state => state.beer);
+  const {isLoading, isError, randomBeer } = useSelector(getRandomBeer);
 	
   const requestForRandomBeer = () => {
     dispatch(getBeer());
