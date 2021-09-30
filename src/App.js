@@ -14,11 +14,29 @@ import Profile from './pages/profile';
 import Chats from './pages/chats';
 import ChatId from './pages/chatId';
 import {Beer} from "./pages/beer";
+import Login from "./pages/login";
 
 import './style.scss';
 import {getChats} from "./store/chats/selectors";
+import firebase from "firebase/compat";
+import {useEffect, useState} from "react";
+import {PublicRoute} from "./hocs/PublicRoute";
+import {PrivateRoute} from "./hocs/PrivateRoute";
 
 const App = () => {
+
+	const [authed, setAuthed] = useState(false);
+
+	useEffect(() => {
+		firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				setAuthed(true);
+			} else {
+				setAuthed(false);
+			}
+		})
+	}, []);
+
 
 	const buddyList = useSelector(getChats);
 
@@ -39,30 +57,37 @@ const App = () => {
 		<Container maxWidth="md">
 			<Grid container spacing={2} direction="column">
 				<Grid item>
-					<Route exact path='/'>
+					<PublicRoute authenticated={authed} exact path="/">
 						<Main/>
-					</Route>
-					<Route path='/profile'>
+					</PublicRoute>
+					<PublicRoute authenticated={authed} exact path='/login'>
+						<Login/>
+					</PublicRoute>
+					<PrivateRoute authenticated={authed} path='/profile'>
 						<Profile/>
-					</Route>
-					<Route path='/beer'>
+					</PrivateRoute>
+					<PublicRoute authenticated={authed} path='/beer'>
 						<Beer/>
-					</Route>
-					<Route exact path='/chats'>
+					</PublicRoute>
+					<PrivateRoute authenticated={authed} exact path='/chats'>
 						<Chats/>
-					</Route>
-					<Route
+					</PrivateRoute>
+					<PrivateRoute
+						authenticated={authed}
 						exact path='/chats/:buddyId'
 						render={
 							routeProps => checkBuddyExist(routeProps)
 						}
 					>
-					</Route>
+					</PrivateRoute>
 				</Grid>
 				<Grid item>
 					<Paper>
 						<NavLink to='/'>
 							<Button color="default" startIcon={<HomeIcon />} className='navitab'>Main</Button>
+						</NavLink>
+						<NavLink to='/login'>
+							<Button color="primary" startIcon={<AccountCircleIcon />} className='navitab'>Login</Button>
 						</NavLink>
 						<NavLink to='/profile'>
 							<Button color="secondary" startIcon={<AccountCircleIcon />} className='navitab'>Profile</Button>

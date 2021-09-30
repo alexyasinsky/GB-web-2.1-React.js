@@ -1,7 +1,7 @@
-import { useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
 
-import { toggleShowName } from "../../store/profile/actions";
+import { useSelector } from "react-redux";
+
+
 
 import Area from '../../components/Area';
 
@@ -10,24 +10,15 @@ import {getProfile} from "../../store/profile/selectors";
 
 export default function Profile() {
 
-	const { showName, name } = useSelector(getProfile);
-	const dispatch = useDispatch();
+	const { name } = useSelector(getProfile);
 
-	const setShowName = useCallback(() => {
-		dispatch(toggleShowName());
-	}, [dispatch]);
 
 
 	return (
 		<Area>
 			<div>Имя профиля: <span>{`${name}`}</span></div>
-			<input
-				type="checkbox"
-				checked={showName}
-				value={showName}
-				onChange={setShowName}
-			/>
-			<label>Чекбокс</label>
+
+
 		</Area>
 	)
 }

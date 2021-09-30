@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 import {store} from "./store";
 import { persistor } from './store';
-import { PersistGate } from 'redux-persist/integration/react'
+import { PersistGate } from 'redux-persist/integration/react';
+import './api/firebase';
 import App from './App';
 
 // import reportWebVitals from './reportWebVitals';

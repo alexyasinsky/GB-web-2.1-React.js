@@ -6,7 +6,7 @@ import './style.scss';
 export default function Main() {
   return (
     <Area>
-      Приветствую в мессенджере
+      <p>Добро пожаловать в чат</p>
     </Area>
   )
 }
