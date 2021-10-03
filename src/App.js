@@ -20,7 +20,6 @@ import './style.scss';
 import {getChats} from "./store/chats/selectors";
 import firebase from "firebase/compat";
 import {useEffect, useState} from "react";
-import {PublicRoute} from "./hocs/PublicRoute";
 import {PrivateRoute} from "./hocs/PrivateRoute";
 
 const App = () => {
@@ -57,23 +56,23 @@ const App = () => {
 		<Container maxWidth="md">
 			<Grid container spacing={2} direction="column">
 				<Grid item>
-					<PublicRoute authenticated={authed} exact path="/">
+					<Route exact path="/">
 						<Main/>
-					</PublicRoute>
-					<PublicRoute authenticated={authed} exact path='/login'>
+					</Route>
+					<Route exact path='/login'>
 						<Login/>
-					</PublicRoute>
-					<PrivateRoute authenticated={authed} path='/profile'>
-						<Profile/>
-					</PrivateRoute>
-					<PublicRoute authenticated={authed} path='/beer'>
+					</Route>
+					<Route path='/profile'>
+						{ authed ? <Profile/> : <Redirect to='/login' />}
+					</Route>
+					<Route path='/beer'>
 						<Beer/>
-					</PublicRoute>
-					<PrivateRoute authenticated={authed} exact path='/chats'>
+					</Route>
+					<PrivateRoute auth={authed} exact path='/chats'>
 						<Chats/>
 					</PrivateRoute>
 					<PrivateRoute
-						authenticated={authed}
+						auth={authed}
 						exact path='/chats/:buddyId'
 						render={
 							routeProps => checkBuddyExist(routeProps)
