@@ -5,11 +5,13 @@ import {Button, TextField} from "@material-ui/core";
 import {useState} from "react";
 
 import firebase from "firebase/compat";
-import { setUser } from '../../store/profile/actions';
+import { getUsersFromDataBase } from '../../store/profile/actions';
 import { useDispatch } from 'react-redux';
 
 import { db } from '../../api/firebase';
 import { set, ref, onValue } from "firebase/database";
+import generator from "../../tools/generator";
+import faker from 'faker';
 
 export default function Login() {
 
@@ -22,11 +24,16 @@ export default function Login() {
 
   const dispatch = useDispatch();
 
-  const setUser = (email, password) => {
-    set(ref(db, 'users/'), {
-      email,
-      password
+  const setUser = async (email, password) => {
+    const id = generator(5,10);
+    await set(ref(db, 'users/'), {
+      [id]: {
+        email,
+        password,
+        avatar: faker.image.avatar(),
+      }
     });
+    dispatch(getUsersFromDataBase(id));
   };
 
   const handleEmailChange = (e) => {
@@ -43,8 +50,7 @@ export default function Login() {
     setError("");
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
-      debugger
-      setUser(email, password);
+      await setUser(email, password);
     } catch (error) {
       setError(error.message);
     }
@@ -86,7 +92,7 @@ export default function Login() {
       </div>
       <div className='login__button-box'>
         <Button
-          onChange={handleSignInButton}
+          onClick={handleSignInButton}
           className='login__button'
           variant="contained"
           color='primary'

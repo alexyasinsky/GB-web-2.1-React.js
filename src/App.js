@@ -5,7 +5,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ForumIcon from '@material-ui/icons/Forum';
 import Favorite from '@material-ui/icons/Favorite';
 
-import {Route, Redirect } from "react-router-dom";
+import {Route, Redirect, Switch } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -21,6 +21,7 @@ import {getChats} from "./store/chats/selectors";
 import firebase from "firebase/compat";
 import {useEffect, useState} from "react";
 import {PrivateRoute} from "./hocs/PrivateRoute";
+import {PublicRoute} from "./hocs/PublicRoute";
 
 const App = () => {
 
@@ -56,29 +57,31 @@ const App = () => {
 		<Container maxWidth="md">
 			<Grid container spacing={2} direction="column">
 				<Grid item>
-					<Route exact path="/">
-						<Main/>
-					</Route>
-					<Route exact path='/login'>
-						<Login/>
-					</Route>
-					<Route path='/profile'>
-						{ authed ? <Profile/> : <Redirect to='/login' />}
-					</Route>
-					<Route path='/beer'>
-						<Beer/>
-					</Route>
-					<PrivateRoute auth={authed} exact path='/chats'>
-						<Chats/>
-					</PrivateRoute>
-					<PrivateRoute
-						auth={authed}
-						exact path='/chats/:buddyId'
-						render={
-							routeProps => checkBuddyExist(routeProps)
-						}
-					>
-					</PrivateRoute>
+					<Switch>
+						<Route exact path="/">
+							<Main/>
+						</Route>
+						<PublicRoute auth={authed} exact path='/login'>
+							<Login/>
+						</PublicRoute>
+						<PrivateRoute auth={authed} path='/profile'>
+							<Profile/>
+						</PrivateRoute>
+						<Route path='/beer'>
+							<Beer/>
+						</Route>
+						<PrivateRoute auth={authed} exact path='/chats'>
+							<Chats/>
+						</PrivateRoute>
+						<PrivateRoute
+							auth={authed}
+							exact path='/chats/:buddyId'
+							render={
+								routeProps => checkBuddyExist(routeProps)
+							}
+						>
+						</PrivateRoute>
+					</Switch>
 				</Grid>
 				<Grid item>
 					<Paper>
