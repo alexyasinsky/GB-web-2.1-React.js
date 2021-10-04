@@ -5,7 +5,8 @@ import './style.scss'
 
 
 export default function MessageListItem (props) {
-	const message = props.message;
+
+  const message = props.message;
 	const [itemClass, setItemClass] = useState('');
 
 	useEffect(() => {

@@ -2,8 +2,8 @@ import { Grid, Paper, List} from '@material-ui/core';
 
 
 import ChatList from "../../components/ChatList";
-import BuddyAddForm from "../../components/BuddyAddForm";
-import Dialog from "./components/Dialog";
+import BuddyAddForm from "../../components/BuddyAddFormContainer";
+import Dialog from "./components/DialogContainer";
 
 import './style.scss';
 

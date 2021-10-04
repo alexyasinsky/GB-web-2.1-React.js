@@ -12,7 +12,6 @@ export default function Profile() {
 
 	const { showName, name } = useSelector(getProfile);
 	const dispatch = useDispatch();
-	console.log(showName);
 
 	const setShowName = useCallback(() => {
 		dispatch(toggleShowName());

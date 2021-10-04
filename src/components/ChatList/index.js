@@ -1,5 +1,5 @@
 
-import ChatListItem from "./components/ChatListItem";
+import ChatListItem from "./components/ChatListItemContainer";
 
 import { useSelector } from "react-redux";
 import {getChats} from "../../store/chats/selectors";

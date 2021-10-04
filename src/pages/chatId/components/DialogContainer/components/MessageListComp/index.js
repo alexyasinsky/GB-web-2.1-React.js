@@ -1,10 +1,10 @@
 
-import MessageListItem from "./components/MessageListItem";
+import MessageListItem from "./components/MessageListItemComp";
 import ListItem from '@material-ui/core/ListItem';
 
-export default function MessageList(props) {
+export default function MessageList({list}) {
     return (
-      props.list.map((message, ind) =>
+      list.map((message, ind) =>
         <ListItem key={`${message.user}+${ind}`}>
           <MessageListItem message={message}/>
         </ListItem>
