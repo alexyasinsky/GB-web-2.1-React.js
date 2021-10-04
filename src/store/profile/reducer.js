@@ -1,17 +1,12 @@
-import { TOGGLE_SHOWNAME } from './actions';
+import { GET_USERS } from './actions';
 
-const initialState = {
-	showName: false,
-	name: 'Alex'
-}
+const initialState = {}
 
 export const profileReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case TOGGLE_SHOWNAME:
-			return {
-				...state,
-				showName: !state.showName
-			}
+		case GET_USERS:
+		state = action.payload;	
+    return state;
 		default:
 			return state;
 	}
