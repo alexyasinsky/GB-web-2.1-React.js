@@ -10,40 +10,12 @@ import './style.scss';
 import {useSelector, useDispatch } from "react-redux";
 import {addMessageWithThunk} from "../../../../store/messages/actions";
 import {getMessages} from "../../../../store/messages/selectors";
-import {getProfileName} from "../../../../store/profile/selectors";
 
-import {db} from '../../../../api/firebase';
-import { ref, set, onValue } from "firebase/database";
 
 export default function Dialog() {
 
-  // const [messagesFB, setMessagesFB] = useState([]);
 
-  // db.ref("messages").on("value", (snapshot) => {
-  //   const messagesFB = [];
-  //   snapshot.forEach((snap) => {
-  //     messages.push(snap.val());
-  //   });
-  
-  //   console.log(snapshot.key, messagesFB);
-  // });
-
-  const messagesDB = ref(db, 'messages');
-
-  function writeUserData(message) {
-    set(messagesDB, message);
-    console.log('message setted');
-  }
-
-  onValue(messagesDB, (snapshot) => {
-    console.log(snapshot.val());
-  });
-
-
-
-
-
-	const user = useSelector(getProfileName);
+	const user = 'Alex';
 
 	const [isDefaultMessageVisible, setVisible] = useState(true);
 	const [chatClass, setChatClass] = useState('chat chat_empty');
@@ -80,7 +52,6 @@ export default function Dialog() {
 
 
 	function handleSubmit(message) {
-    writeUserData(message);
 		dispatch(addMessageWithThunk(buddyId, message, user, buddyName));
 	}
 

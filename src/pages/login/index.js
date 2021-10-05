@@ -2,21 +2,18 @@ import Area from '../../components/Area';
 
 import './style.scss';
 import {Button, TextField} from "@material-ui/core";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 
 import firebase from "firebase/compat";
-import { getUsersFromDataBase } from '../../store/profile/actions';
+import { createUsersState } from '../../store/users/actions';
 import { useDispatch } from 'react-redux';
 
 import { db } from '../../api/firebase';
-import { set, ref, onValue } from "firebase/database";
-import generator from "../../tools/generator";
+import { set, ref, push } from "firebase/database";
 import faker from 'faker';
 
+
 export default function Login() {
-
-  // onValue()
-
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState('');
@@ -24,17 +21,21 @@ export default function Login() {
 
   const dispatch = useDispatch();
 
-  const setUser = async (email, password) => {
-    const id = generator(5,10);
-    await set(ref(db, 'users/'), {
-      [id]: {
-        email,
-        password,
-        avatar: faker.image.avatar(),
-      }
-    });
-    dispatch(getUsersFromDataBase(id));
+  const createNewUser = async (email, password) => {
+    const user = {
+      name: email,
+      email,
+      password,
+      avatar: faker.image.avatar(),
+    };
+    const newUserRef = push(ref(db, '/users'));
+    await set(newUserRef, user);
+    dispatch(createUsersState());
   };
+
+  const signInWithExistingUser = useCallback(() => {
+    dispatch(createUsersState())
+  }, [dispatch])
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -45,12 +46,12 @@ export default function Login() {
   };
 
 
-
   const handleRegisterButton = async () => {
     setError("");
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
-      await setUser(email, password);
+      await createNewUser(email, password);
+
     } catch (error) {
       setError(error.message);
     }
@@ -61,14 +62,11 @@ export default function Login() {
 
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
+      signInWithExistingUser();
     } catch (error) {
       setError(error.message);
     }
   };
-
-
-
-
 
 
   return (
