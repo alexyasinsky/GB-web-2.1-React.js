@@ -1,4 +1,5 @@
 import {Paper, Typography} from "@material-ui/core";
+import { mdiHours24 } from '@mdi/js';
 
 import './style.scss';
 
@@ -6,12 +7,9 @@ export default function Area(props) {
 
   return (
     <Paper className='area'>
-        <Typography
-          variant="h4"
-          align='center'
-        >
+        <p className='area__highlight'>
           {props.children}
-        </Typography>
+        </p>
       </Paper>
   )
   

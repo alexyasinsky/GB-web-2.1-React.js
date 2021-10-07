@@ -106,7 +106,7 @@ const App = () => {
 							<Button color="secondary" startIcon={<AccountCircleIcon />} className='navitab'>Profile</Button>
 						</NavLink>
 						<NavLink to='/beer'>
-								<Button  startIcon={<Favorite />} color={"default"} className='navitab'>Подобрать пивко на вечер =)</Button>
+								<Button  startIcon={<Favorite />} color="default" className='navitab'>Подобрать пивко на вечер =)</Button>
 						</NavLink>
 						<NavLink to='/chats'>
 							<Button color="primary" startIcon={<ForumIcon />} className='navitab'>Chats</Button>
