@@ -2,11 +2,9 @@ import Area from '../../components/Area';
 
 import './style.scss';
 import {Button, TextField} from "@material-ui/core";
-import {useCallback, useState} from "react";
+import {useState} from "react";
 
 import firebase from "firebase/compat";
-import { createUsersState } from '../../store/users/actions';
-import { useDispatch } from 'react-redux';
 
 import { db } from '../../api/firebase';
 import { set, ref, push } from "firebase/database";
@@ -19,7 +17,6 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const dispatch = useDispatch();
 
   const createNewUser = async (email, password) => {
     const user = {
@@ -30,12 +27,8 @@ export default function Login() {
     };
     const newUserRef = push(ref(db, '/users'));
     await set(newUserRef, user);
-    dispatch(createUsersState());
   };
 
-  const signInWithExistingUser = useCallback(() => {
-    dispatch(createUsersState())
-  }, [dispatch])
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -51,7 +44,6 @@ export default function Login() {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
       await createNewUser(email, password);
-
     } catch (error) {
       setError(error.message);
     }
@@ -59,15 +51,12 @@ export default function Login() {
 
   const handleSignInButton = async () => {
     setError("");
-
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
-      signInWithExistingUser();
     } catch (error) {
       setError(error.message);
     }
   };
-
 
   return (
     <Area>

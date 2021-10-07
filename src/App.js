@@ -23,7 +23,14 @@ import {useEffect, useState} from "react";
 import {PrivateRoute} from "./hocs/PrivateRoute";
 import {PublicRoute} from "./hocs/PublicRoute";
 
+import { createUsersState } from './store/users/actions';
+import { useDispatch } from 'react-redux';
+
+
+
 const App = () => {
+
+  const dispatch = useDispatch();
 
 	const [authed, setAuthed] = useState(false);
 
@@ -36,6 +43,10 @@ const App = () => {
 			}
 		})
 	}, []);
+
+  useEffect(()=> {
+    dispatch(createUsersState(authed));
+  }, [authed])
 
 
 	const buddyList = useSelector(getChats);

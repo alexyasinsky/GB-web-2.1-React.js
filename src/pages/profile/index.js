@@ -9,17 +9,28 @@ import './style.scss';
 
 import {Button} from "@material-ui/core";
 
+import { useDispatch } from 'react-redux';
+import { clearUsersStore } from '../../store/users/actions';
+
+
 export default function Profile() {
 
+  const dispatch = useDispatch();
 
 	function signOutHandler() {
 		const auth = getAuth();
 		signOut(auth).then(() => {
+      dispatch(clearUsersStore());
 			console.log('sign out successful');
-		}).catch((error) => {
+		})
+    .catch((error) => {
 			console.log('sign out failed')
 		});
 	}
+
+  const users = useSelector(state => state.users);
+
+  console.log(users);
 
 
 	return (

@@ -1,13 +1,9 @@
 import { getAuth } from "firebase/auth";
 
-import { SET_USERS, SET_PROFILE_AND_BUDDIES } from './actions';
+import { SET_USERS, SET_PROFILE_AND_BUDDIES, CLEAR_USERS_STORE } from './actions';
 
 
-const initialState = {
-	profile: {},
-  users: {},
-	buddies: {}
-}
+const initialState = {}
 
 export const usersReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -25,6 +21,9 @@ export const usersReducer = (state = initialState, action) => {
           state.buddies = list;
         }
       }
+      return state;
+    case CLEAR_USERS_STORE: 
+      for (let item in state) delete state[item];
       return state;
 		default:
 			return state;
