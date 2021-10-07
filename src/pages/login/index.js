@@ -18,11 +18,10 @@ export default function Login() {
   const [error, setError] = useState('');
 
 
-  const createNewUser = async (email, password) => {
+  const createNewUser = async (email) => {
     const user = {
       name: email,
       email,
-      password,
       avatar: faker.image.avatar(),
     };
     const newUserRef = push(ref(db, '/users'));
@@ -43,7 +42,7 @@ export default function Login() {
     setError("");
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
-      await createNewUser(email, password);
+      await createNewUser(email);
     } catch (error) {
       setError(error.message);
     }

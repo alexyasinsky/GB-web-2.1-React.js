@@ -46,7 +46,7 @@ const App = () => {
 
   useEffect(()=> {
     dispatch(createUsersState(authed));
-  }, [authed])
+  }, [dispatch, authed])
 
 
 	const buddyList = useSelector(getChats);
