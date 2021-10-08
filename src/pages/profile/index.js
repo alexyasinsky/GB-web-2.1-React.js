@@ -4,13 +4,15 @@ import { getAuth, signOut } from "firebase/auth";
 
 
 import Area from '../../components/Area';
+import Modal from  '../../components/Modal';
+import Card from './components/Card';
+import Form from './components/Form'
 
-import './style.scss';
-
-import {Button} from "@material-ui/core";
 
 import { useDispatch } from 'react-redux';
 import { clearUsersStore } from '../../store/users/actions';
+import { useState } from 'react';
+
 
 
 export default function Profile() {
@@ -30,28 +32,31 @@ export default function Profile() {
 
   const profile = useSelector(state => state.users.profile);
 
+  const [cardIsVisible, setCardVisible] = useState(true);
+
+  const [modalIsVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setCardVisible(!cardIsVisible);
+    setModalVisible(!modalIsVisible);
+  }
 
 	return (
 		<Area>
-      <div className="profile__card">
-        <div>
-          <img alt='avatar' src={ profile?.avatar }/>
-        </div>
-        <div className='profile__content'>
-          <p>Имя: <span>{ profile?.name}</span></p> 
-          <p>email: <span>{ profile?.email}</span></p> 
-          <Button
-            onClick={signOutHandler}
-				    variant="contained"
-            color="primary"
-          >Выйти из профиля
-        </Button>
-        <Button
-         color="secondary"
-          >Изменить учетные данные
-        </Button>
-        </div>
-      </div>
-		</Area>
+      <Card 
+        profile={profile}
+        signOut={signOutHandler}
+        visible={cardIsVisible}
+        showModal={toggleModal}
+      />
+      <Modal 
+        className='profile__modal' 
+        visible={modalIsVisible}
+      >
+        <Form
+          hideModal={toggleModal}
+        />
+      </Modal>
+    </Area>
 	)
 }

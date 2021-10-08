@@ -14,12 +14,11 @@ import { CircularProgress } from '@material-ui/core';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-    <PersistGate persistor={persistor} loading={<CircularProgress/>}>
-    <Provider store={store}>
+      <Provider store={store}>
+        <PersistGate persistor={persistor} loading={<CircularProgress/>}>
           <App />
+        </PersistGate>
       </Provider>
-    </PersistGate>
-      
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

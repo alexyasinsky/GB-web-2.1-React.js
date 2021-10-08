@@ -25,4 +25,17 @@
       width: 300px;
     }
   }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    input {
+      width: 400px;
+    }
+  }
+  &__inputBox {
+    margin-bottom: 40px;
+    button {
+      margin-left: 30px;
+    }
+  }
 }
