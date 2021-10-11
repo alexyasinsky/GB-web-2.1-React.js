@@ -49,11 +49,18 @@ const App = () => {
   }, [dispatch, authed])
 
 
-	const buddyList = useSelector(getChats);
+	const buddyList = useSelector(state => state.users.buddies);
 
-	let buddyIds = buddyList.map(buddy => buddy.id);
+  let buddyEmails = [];
+
+	if (buddyList) {
+    buddyEmails = buddyList.map(buddy => buddy.email);
+  }
+
+  console.log(buddyEmails);
+
 	function checkBuddyExist(props) {
-		if (buddyIds.includes(props.match.params.buddyId)) {
+		if (buddyEmails.includes(props.match.params.buddyEmail)) {
 			return (
 				<ChatId />
 			)
@@ -86,7 +93,7 @@ const App = () => {
 						</PrivateRoute>
 						<PrivateRoute
 							auth={authed}
-							exact path='/chats/:buddyId'
+							exact path='/chats/:buddyEmail'
 							render={
 								routeProps => checkBuddyExist(routeProps)
 							}

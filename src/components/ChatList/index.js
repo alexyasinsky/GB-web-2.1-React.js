@@ -2,18 +2,18 @@
 import ChatListItem from "./components/ChatListItemContainer";
 
 import { useSelector } from "react-redux";
-import {getChats} from "../../store/chats/selectors";
+
 
 
 
 export default function ChatList() {
-	const list = useSelector(getChats);
 
+  const buddies  = useSelector(state => state.users.buddies);
 
 
 	return (
-		list.map((buddy) =>
-			<ChatListItem key={buddy.id} item={buddy}/>
+		buddies.map((buddy) =>
+			<ChatListItem key={buddy.email} item={buddy}/>
 		)
 	)
 }

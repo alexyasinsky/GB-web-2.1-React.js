@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 export default function ChatListItemComp({buddy, deleteItem}) {
   return (
     <ListItem button>
-			<NavLink key={buddy.id} to={`/chats/${buddy.id}`} className='chats__link'>
+			<NavLink key={buddy.email} to={`/chats/${buddy.email}`} className='chats__link'>
 				<Avatar alt={buddy.name} src={buddy.avatar} className='chats__avatar' />
 				<ListItemText
 					primary={buddy.name}

@@ -18,9 +18,12 @@ export const usersReducer = (state = initialState, action) => {
           state.profile = list[item];
           state.profile.id = item;
           delete list[item];
-          state.buddies = list;
         }
       }
+      for (let item in list) {
+        list[item].id = item;
+      }
+      state.buddies = Object.values(list);
       return state;
     case CLEAR_USERS_STORE: 
       for (let item in state) delete state[item];

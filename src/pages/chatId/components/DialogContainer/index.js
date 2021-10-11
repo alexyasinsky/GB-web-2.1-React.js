@@ -15,21 +15,21 @@ import {getMessages} from "../../../../store/messages/selectors";
 export default function Dialog() {
 
 
-	const user = 'Alex';
+	const user = useSelector(state => state.users.profile.name);
 
 	const [isDefaultMessageVisible, setVisible] = useState(true);
 	const [chatClass, setChatClass] = useState('chat chat_empty');
 
 	const chatList = useSelector(state => state.chats);
 
-	const { buddyId } = useParams();
+	const { buddyEmail } = useParams();
 
 	const dispatch = useDispatch();
 	const messages = useSelector(getMessages);
 
 	const messageList = useMemo(() => {
-		return messages[buddyId] || [];
-	}, [messages, buddyId]);
+		return messages[buddyEmail] || [];
+	}, [messages, buddyEmail]);
 
 	function getBuddyNameById (id, list) {
 		let name = '';
@@ -41,7 +41,7 @@ export default function Dialog() {
 		return name;
 	}
 
-	const buddyName = getBuddyNameById(buddyId, chatList);
+	const buddyName = buddyEmail;
 
 	useEffect(() => {
 		if (messageList.length > 0) {
@@ -52,7 +52,7 @@ export default function Dialog() {
 
 
 	function handleSubmit(message) {
-		dispatch(addMessageWithThunk(buddyId, message, user, buddyName));
+		dispatch(addMessageWithThunk(buddyEmail, message, user, buddyName));
 	}
 
 	return (
