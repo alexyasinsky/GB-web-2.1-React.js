@@ -1,7 +1,6 @@
 import { getAuth } from "firebase/auth";
 
-import { SET_USERS, SET_PROFILE_AND_BUDDIES, CLEAR_USERS_STORE } from './actions';
-
+import { SET_USERS, SET_PROFILE_AND_BUDDIES, CLEAR_USERS_STORE, CHANGE_USER_NAME } from './actions';
 
 const initialState = {}
 
@@ -17,6 +16,7 @@ export const usersReducer = (state = initialState, action) => {
       for (let item in list) {
         if (list[item].email === profileUser.email) {
           state.profile = list[item];
+          state.profile.id = item;
           delete list[item];
           state.buddies = list;
         }
@@ -24,6 +24,10 @@ export const usersReducer = (state = initialState, action) => {
       return state;
     case CLEAR_USERS_STORE: 
       for (let item in state) delete state[item];
+      return state;
+    case CHANGE_USER_NAME: 
+      const name = action.name;
+      state.profile.name = name;
       return state;
 		default:
 			return state;

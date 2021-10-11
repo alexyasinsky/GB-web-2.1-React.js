@@ -1,4 +1,3 @@
-import Area from '../../components/Area';
 
 export default function Modal(props) {
 

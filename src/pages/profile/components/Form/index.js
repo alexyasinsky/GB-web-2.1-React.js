@@ -1,7 +1,8 @@
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 
-export default function Form({hideModal}) {
+
+export default function Form({hideModal, setUserName, userName, changeUserName}) {
 
   
 
@@ -12,16 +13,19 @@ export default function Form({hideModal}) {
         id="name"
         label="Введите имя"
         variant="outlined"
+        value={userName}
+        onChange={setUserName}
       />
       <Button
         variant="contained"
         color='primary'
+        onClick={changeUserName}
       >
         Изменить
       </Button>
       </div>
       
-        <div className='profile__inputBox'>
+        {/* <div className='profile__inputBox'>
         <TextField
         id="avatar"
         label="Введите ссылку на фото для аватара"
@@ -33,7 +37,7 @@ export default function Form({hideModal}) {
       >
         Изменить
       </Button>
-        </div>
+        </div> */}
       <Button
         variant="contained"
         color="secondary"

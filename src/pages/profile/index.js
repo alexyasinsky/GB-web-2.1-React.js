@@ -11,7 +11,8 @@ import Form from './components/Form'
 
 import { useDispatch } from 'react-redux';
 import { clearUsersStore } from '../../store/users/actions';
-import { useState } from 'react';
+import { changeUserName } from '../../store/users/actions';
+import { useCallback, useState } from 'react';
 
 
 
@@ -32,14 +33,31 @@ export default function Profile() {
 
   const profile = useSelector(state => state.users.profile);
 
+  const profileId = profile?.id;
+
+  console.log(profileId);
+
+  const [userName, setUserName] = useState('');
+
+  const handleUserName = (event) => {
+    setUserName(event.target.value);
+  }
+
+  console.log(userName);
+
   const [cardIsVisible, setCardVisible] = useState(true);
 
   const [modalIsVisible, setModalVisible] = useState(false);
 
-  const toggleModal = () => {
+  const toggleModal = useCallback(() => {
     setCardVisible(!cardIsVisible);
     setModalVisible(!modalIsVisible);
-  }
+  }, [cardIsVisible, modalIsVisible]);
+
+  const changeUserNameButtonWrapper = useCallback( () => {
+    dispatch(changeUserName(profileId, userName));
+    toggleModal();
+  }, [dispatch,toggleModal, userName, profileId]);
 
 	return (
 		<Area>
@@ -55,6 +73,9 @@ export default function Profile() {
       >
         <Form
           hideModal={toggleModal}
+          setUserName={handleUserName}
+          userName={userName}
+          changeUserName={changeUserNameButtonWrapper}
         />
       </Modal>
     </Area>
