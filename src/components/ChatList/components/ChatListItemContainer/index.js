@@ -20,7 +20,7 @@ export default function ChatListItem(props) {
 
 	return (
     <ChatListItemComp
-     chat={chat}
+      chat={chat}
       deleteBuddy={deleteBuddy}
     />
 	)

@@ -8,8 +8,12 @@ import {useEffect, useState, useMemo } from "react";
 
 import './style.scss';
 import {useSelector, useDispatch } from "react-redux";
-import {addMessageWithThunk} from "../../../../store/messages/actions";
+// import {addMessageWithThunk} from "../../../../store/messages/actions";
 import {getMessages} from "../../../../store/messages/selectors";
+import { initMessagesList } from '../../../../store/messages/actions';
+
+import { db } from '../../../../api/firebase';
+import { set, ref, push } from "firebase/database";
 
 
 export default function Dialog() {
@@ -17,43 +21,51 @@ export default function Dialog() {
 
 	const user = useSelector(state => state.users.profile.name);
 
+  const chats = useSelector(state => state.users.profile.chats);
+
+  function getCurrentChatById(id) {
+    let currentChat = {};
+    chats.forEach(chat => {
+      if (chat.buddy.id === id) {
+        currentChat = chat;
+      }
+    });
+    return currentChat;
+  }
+  const { buddyId } = useParams();
+
+  const currentChat = getCurrentChatById(buddyId);
+
+  const buddyName = currentChat.buddy.name;
+
 	const [isDefaultMessageVisible, setVisible] = useState(true);
 	const [chatClass, setChatClass] = useState('chat chat_empty');
 
-	const chatList = useSelector(state => state.chats);
+  const dispatch = useDispatch();
 
-	const { buddyEmail } = useParams();
+  useEffect(()=> {
+    dispatch(initMessagesList(currentChat.dialogId));
+  }, [currentChat]);
 
-	const dispatch = useDispatch();
-	const messages = useSelector(getMessages);
+  // const chatList = useSelector(state => state.chats);
+	const messages = useSelector(state => state.messages);
 
-	const messageList = useMemo(() => {
-		return messages[buddyEmail] || [];
-	}, [messages, buddyEmail]);
-
-	function getBuddyNameById (id, list) {
-		let name = '';
-		list.forEach(chat => {
-			if (chat.id === id) {
-				name = chat.name;
-			}
-		});
-		return name;
-	}
-
-	const buddyName = buddyEmail;
+  console.log(messages);
 
 	useEffect(() => {
-		if (messageList.length > 0) {
+		if (messages.length > 0) {
 			setVisible(false);
 			setChatClass('chat');
 		}
-	}, [messageList])
+	}, [messages])
 
-
-	function handleSubmit(message) {
-		dispatch(addMessageWithThunk(buddyEmail, message, user, buddyName));
-	}
+  const addMessage = async (message) => {
+    const newMessageRef = push(ref(db, 'dialogs/' + currentChat.dialogId));
+    await set(newMessageRef, message)
+  }
+	// function handleSubmit(message) {
+	// 	dispatch(addMessageWithThunk(buddyId, message, user, buddyName));
+	// }
 
 	return (
 		<>
@@ -79,11 +91,14 @@ export default function Dialog() {
 						: ''
 					}
 					<List>
-						<MessageList list={messageList}/>
+						<MessageList list={messages}/>
 					</List>
 				</div>
 			</Paper>
-			<Form handler={handleSubmit} user={user} />
+			<Form 
+        handler={addMessage} 
+        user={user} 
+      />
 		</>
 	)
 }
