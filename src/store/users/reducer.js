@@ -1,6 +1,11 @@
 import { getAuth } from "firebase/auth";
 
-import { SET_USERS, SET_PROFILE_AND_BUDDIES, CLEAR_USERS_STORE, CHANGE_USER_NAME } from './actions';
+import { 
+  SET_USERS, 
+  SET_PROFILE_AND_BUDDIES_AND_CHATS, 
+  CLEAR_USERS_STORE, 
+  CHANGE_USER_NAME,
+} from './actions';
 
 const initialState = {}
 
@@ -9,7 +14,7 @@ export const usersReducer = (state = initialState, action) => {
 		case SET_USERS:
       state.users = action.payload;
       return state;
-    case SET_PROFILE_AND_BUDDIES:
+    case SET_PROFILE_AND_BUDDIES_AND_CHATS:
       let list = Object.assign({}, state.users);
       const auth = getAuth();
       const profileUser = auth.currentUser;
@@ -17,6 +22,11 @@ export const usersReducer = (state = initialState, action) => {
         if (list[item].email === profileUser.email) {
           state.profile = list[item];
           state.profile.id = item;
+          if (!state.profile.chats) {
+            state.profile.chats = [];
+          } else {
+            state.profile.chats = Object.values(state.profile.chats);
+          }
           delete list[item];
         }
       }

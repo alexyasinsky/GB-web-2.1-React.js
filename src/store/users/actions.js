@@ -1,10 +1,10 @@
 import { db } from '../../api/firebase';
 import { ref, onValue, update  } from "firebase/database";
 
-export const SET_PROFILE_AND_BUDDIES = 'PROFILE::SET_PROFILE_AND_BUDDIES';
-export const SET_USERS = 'PROFILE::SET_USERS';
-export const CLEAR_USERS_STORE = 'PROFILE::CLEAR_USERS_STORE';
-export const CHANGE_USER_NAME = 'PROFILE::CHANGE_USER_NAME';
+export const SET_PROFILE_AND_BUDDIES_AND_CHATS = 'USERS::SET_PROFILE_AND_BUDDIES_AND_CHATS';
+export const SET_USERS = 'USERS::SET_USERS';
+export const CLEAR_USERS_STORE = 'USERS::CLEAR_USERS_STORE';
+export const CHANGE_USER_NAME = 'USERS::CHANGE_USER_NAME';
 
 const usersDataBaseRef = ref(db, 'users/');
 
@@ -13,7 +13,7 @@ export const createUsersState = (authed) => (dispatch) => {
     onValue(usersDataBaseRef, (snapshot) => {
       const payload = snapshot.val();
       dispatch(setUsers(payload));
-      dispatch(setProfileAndBuddies());
+      dispatch(setProfileAndBuddiesAndChats());
     })
   }
 }
@@ -23,8 +23,8 @@ export const setUsers = (payload) => ({
   payload
 });
 
-export const setProfileAndBuddies = () => ({
-  type: SET_PROFILE_AND_BUDDIES
+export const setProfileAndBuddiesAndChats = () => ({
+  type: SET_PROFILE_AND_BUDDIES_AND_CHATS
 });
 
 export const clearUsersStore = () => ({

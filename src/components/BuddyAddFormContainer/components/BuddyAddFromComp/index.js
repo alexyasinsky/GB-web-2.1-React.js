@@ -9,7 +9,7 @@ export default function BuddyAddFormComp({onChange, addFunction, value}) {
           className='buddy-add__input' 
           value={value} 
           onChange={onChange} 
-          label="Введите идентификатор" 
+          label="Введите e-mail" 
           variant="outlined" 
         />
 			</Grid>

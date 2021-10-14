@@ -1,27 +1,27 @@
 
-import {useCallback} from "react";
-import {useDispatch} from "react-redux";
+import { useSelector} from "react-redux";
 
-import { removeChat } from "../../../../store/chats/actions";
 
 import ChatListItemComp from './components/ChatListItemComp';
+
+import { db } from '../../../../api/firebase';
+import { remove, ref } from "firebase/database";
 
 
 export default function ChatListItem(props) {
 
-	const buddy = props.item;
+	const chat = props.item;
+  const profile = useSelector(state => state.users.profile);
 
-	const dispatch = useDispatch();
-
-	const deleteItem = useCallback(() => {
-		dispatch(removeChat(buddy));
-	}, [dispatch, buddy])
+  const deleteBuddy = async () => {
+    await remove(ref(db, 'users/' + profile.id + '/chats/' + chat.chatId));
+  }
 
 
 	return (
     <ChatListItemComp
-      buddy={buddy}
-      deleteItem={deleteItem}
+     chat={chat}
+      deleteBuddy={deleteBuddy}
     />
 	)
 }

@@ -8,12 +8,12 @@ import { useSelector } from "react-redux";
 
 export default function ChatList() {
 
-  const buddies  = useSelector(state => state.users.buddies);
-
+  const chats  = useSelector(state => state.users.profile.chats);
+  console.log(chats);
 
 	return (
-		buddies.map((buddy) =>
-			<ChatListItem key={buddy.email} item={buddy}/>
+		chats.map((chat) =>
+			<ChatListItem key={chat.buddy.id} item={chat}/>
 		)
 	)
 }
