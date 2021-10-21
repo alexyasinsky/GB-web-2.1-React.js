@@ -31,16 +31,25 @@ export default function BuddyAddForm() {
 
 
   const createNewChat = async (email) => {
+	  const newDialogRef = push(child(ref(db), 'dialogs'));
     const buddy = Object.assign({}, findBuddy(email));
     delete buddy.chats;
-    const newDialogRef = push(child(ref(db), 'dialogs'));
-    const newChatRef = push(ref(db, 'users/' + profile.id + '/chats'));
-    const chat = {
+		const profileForBuddy = Object.assign({}, profile);
+		delete profileForBuddy.chats;
+    const newProfileChatRef = push(ref(db, 'users/' + profile.id + '/chats'));
+	  const newBuddyChatRef = push(ref(db, 'users/' + buddy.id + '/chats'));
+    const profileChat = {
       buddy,
       dialogId: newDialogRef.key,
-      chatId: newChatRef.key
+      chatId: newProfileChatRef.key
     }
-    await set(newChatRef, chat);
+	  const buddyChat = {
+		  buddy: profileForBuddy,
+		  dialogId: newDialogRef.key,
+		  chatId: newProfileChatRef.key
+	  }
+    await set(newProfileChatRef, profileChat);
+	  await set(newBuddyChatRef, buddyChat);
   }
 
 	const [id, setId] = useState('');

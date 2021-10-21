@@ -8,8 +8,6 @@ import {useEffect, useState, useMemo } from "react";
 
 import './style.scss';
 import {useSelector, useDispatch } from "react-redux";
-// import {addMessageWithThunk} from "../../../../store/messages/actions";
-import {getMessages} from "../../../../store/messages/selectors";
 import { initMessagesList } from '../../../../store/messages/actions';
 
 import { db } from '../../../../api/firebase';
@@ -63,9 +61,6 @@ export default function Dialog() {
     const newMessageRef = push(ref(db, 'dialogs/' + currentChat.dialogId));
     await set(newMessageRef, message)
   }
-	// function handleSubmit(message) {
-	// 	dispatch(addMessageWithThunk(buddyId, message, user, buddyName));
-	// }
 
 	return (
 		<>
