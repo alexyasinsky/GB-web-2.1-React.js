@@ -45,7 +45,6 @@ export default function Dialog() {
     dispatch(initMessagesList(currentChat.dialogId));
   }, [currentChat]);
 
-  // const chatList = useSelector(state => state.chats);
 	const messages = useSelector(state => state.messages);
 
   console.log(messages);
