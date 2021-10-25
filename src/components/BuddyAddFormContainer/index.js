@@ -3,7 +3,6 @@ import {useCallback, useState} from 'react';
 
 
 import {useDispatch, useSelector} from "react-redux";
-import {addChat} from "../../store/chats/actions";
 import BuddyAddFormComp from './components/BuddyAddFromComp';
 
 import { db } from '../../api/firebase';
@@ -18,38 +17,55 @@ export default function BuddyAddForm() {
 
   const profile = useSelector(state => state.users.profile);
 
-  const findBuddy = useCallback(email => {
-    let currentBuddy = {};
+  const findBuddyId = useCallback(email => {
     for (let buddy of buddies) {
       if (buddy.email === email) {
-        currentBuddy = buddy;
+        return buddy.id;
       }
     }
-    return currentBuddy;
   }, [buddies]);
 
-
+	// const createNewChat = async (email) => {
+	// 	const newDialogRef = push(child(ref(db), 'dialogs'));
+	// 	const buddy = Object.assign({}, findBuddy(email));
+	// 	delete buddy.chats;
+	// 	const profileForBuddy = Object.assign({}, profile);
+	// 	delete profileForBuddy.chats;
+	// 	const newProfileChatRef = push(ref(db, 'users/' + profile.id + '/chats'));
+	// 	const newBuddyChatRef = push(ref(db, 'users/' + buddy.id + '/chats'));
+	// 	const profileChat = {
+	// 		buddy,
+	// 		dialogId: newDialogRef.key,
+	// 		chatId: newProfileChatRef.key
+	// 	}
+	// 	const buddyChat = {
+	// 		buddy: profileForBuddy,
+	// 		dialogId: newDialogRef.key,
+	// 		chatId: newProfileChatRef.key
+	// 	}
+	// 	await set(newProfileChatRef, profileChat);
+	// 	await set(newBuddyChatRef, buddyChat);
+	// }
 
   const createNewChat = async (email) => {
 	  const newDialogRef = push(child(ref(db), 'dialogs'));
-    const buddy = Object.assign({}, findBuddy(email));
-    delete buddy.chats;
-		const profileForBuddy = Object.assign({}, profile);
-		delete profileForBuddy.chats;
-    const newProfileChatRef = push(ref(db, 'users/' + profile.id + '/chats'));
-	  const newBuddyChatRef = push(ref(db, 'users/' + buddy.id + '/chats'));
-    const profileChat = {
-      buddy,
-      dialogId: newDialogRef.key,
-      chatId: newProfileChatRef.key
+	  const newChatRef = push(child(ref(db), 'chats'));
+    const buddyId = findBuddyId(email);
+    if (!buddyId) {
+    	alert('такой e-mail не зарегистрирован');
+    	return
     }
-	  const buddyChat = {
-		  buddy: profileForBuddy,
-		  dialogId: newDialogRef.key,
-		  chatId: newProfileChatRef.key
-	  }
-    await set(newProfileChatRef, profileChat);
-	  await set(newBuddyChatRef, buddyChat);
+    const profileNewChatRef = push(ref(db, 'users/' + profile.id + '/chats'));
+	  const buddyNewChatRef = push(ref(db, 'users/' + buddyId + '/chats'));
+    const chat = {
+      user1: profile.id,
+	    user2: buddyId,
+      dialogId: newDialogRef.key,
+      chatId: newChatRef.key,
+    }
+    await set(newChatRef, chat);
+	  await set(buddyNewChatRef, newChatRef.key);
+	  await set(profileNewChatRef, newChatRef.key);
   }
 
 	const [id, setId] = useState('');

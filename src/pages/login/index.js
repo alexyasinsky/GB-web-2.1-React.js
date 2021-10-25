@@ -19,12 +19,13 @@ export default function Login() {
 
 
   const createNewUser = async (email) => {
+    const newUserRef = push(ref(db, '/users'));
     const user = {
       name: email,
       email,
       avatar: faker.image.avatar(),
+      id: newUserRef.key
     };
-    const newUserRef = push(ref(db, '/users'));
     await set(newUserRef, user);
   };
 

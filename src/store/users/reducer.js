@@ -21,7 +21,6 @@ export const usersReducer = (state = initialState, action) => {
       for (let item in list) {
         if (list[item].email === profileUser.email) {
           state.profile = list[item];
-          state.profile.id = item;
           if (!state.profile.chats) {
             state.profile.chats = [];
           } else {
@@ -29,9 +28,6 @@ export const usersReducer = (state = initialState, action) => {
           }
           delete list[item];
         }
-      }
-      for (let item in list) {
-        list[item].id = item;
       }
       state.buddies = Object.values(list);
       return state;
