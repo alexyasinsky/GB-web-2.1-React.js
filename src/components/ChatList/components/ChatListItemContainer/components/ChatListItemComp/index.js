@@ -2,10 +2,9 @@ import {ListItem, Avatar, ListItemText, ListItemSecondaryAction, IconButton} fro
 import DeleteIcon from '@material-ui/icons/Delete';
 import { NavLink } from "react-router-dom";
 
-export default function ChatListItemComp(props) {
+export default function ChatListItemComp({chat, deleteBuddy}) {
   
-  const buddy = props.chat.buddy;
-  const deleteBuddy = props.deleteBuddy;
+  const buddy = chat.buddy;
 
   return (
     <ListItem button>

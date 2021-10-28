@@ -71,7 +71,7 @@ export default function BuddyAddForm() {
 	const [id, setId] = useState('');
 	const dispatch = useDispatch();
 	const addBuddy = useCallback( () => {
-		dispatch(addChat(id));
+
 	}, [dispatch, id]);
 
 

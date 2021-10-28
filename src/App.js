@@ -17,13 +17,13 @@ import {Beer} from "./pages/beer";
 import Login from "./pages/login";
 
 import './style.scss';
-import {getChats} from "./store/chats/selectors";
 import firebase from "firebase/compat";
 import {useEffect, useState} from "react";
 import {PrivateRoute} from "./hocs/PrivateRoute";
 import {PublicRoute} from "./hocs/PublicRoute";
 
 import { createUsersState } from './store/users/actions';
+import { createChatsState } from './store/chats/actions';
 import { useDispatch } from 'react-redux';
 
 
@@ -46,6 +46,7 @@ const App = () => {
 
   useEffect(()=> {
     dispatch(createUsersState(authed));
+    dispatch(createChatsState(authed));
   }, [dispatch, authed])
 
 
