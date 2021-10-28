@@ -1,5 +1,5 @@
 import { db } from '../../api/firebase';
-import { ref, onValue, update  } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 // export const ADD_CHAT = 'CHATS::ADD_CHAT';
 export const SET_CHATS = 'CHATS::SET_CHATS';
 
@@ -10,19 +10,15 @@ const chatsDataBaseRef = ref(db, 'chats/');
 // 	id
 // })
 
-export const setChats = (payload) => {
-	debugger
-	console.log(payload);
-	return ({
+export const setChats = (payload) => ({
 	type: SET_CHATS,
 	payload
-})};
+});
 
 export const createChatsState = (authed) => (dispatch) => {
 
 	if (authed) {
 		onValue(chatsDataBaseRef, snapshot => {
-			debugger
 			const payload = Object.values(snapshot.val());
 			dispatch(setChats(payload));
 		})
