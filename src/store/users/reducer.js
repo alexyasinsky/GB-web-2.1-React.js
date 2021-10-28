@@ -31,7 +31,35 @@ export const usersReducer = (state = initialState, action) => {
       if (!state.profile.chats) {
         state.profile.chats = [];
       } else {
-        state.profile.chats = Object.values(state.profile.chats);
+        let chatList = [];
+        const chatLinks = Object.values(state.profile.chats);
+        let allChats = action.payload;
+        chatLinks.forEach(profileChat => {
+          allChats.forEach(chat => {
+            if (chat.chatId === profileChat) {
+              let buddyId = '';
+              if (state.profile.id === chat.user1) {
+                buddyId = chat.user2;
+              } else {
+                buddyId = chat.user1;
+              }
+              let currentBuddy = {};
+              state.buddies.forEach(buddy => {
+                if (buddy.id === buddyId) {
+                  currentBuddy = buddy;
+                  delete currentBuddy.chats;
+                }
+              })
+              let chatModified = {
+                id: chat.chatId,
+                buddy: currentBuddy,
+                dialogId: chat.dialogId,
+              }
+              chatList.push(chatModified);
+            }
+          });
+        })
+        state.profile.chats = chatList;
       }
       return state;
     case CLEAR_USERS_STORE: 

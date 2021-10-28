@@ -16,7 +16,7 @@ import { set, ref, push } from "firebase/database";
 
 export default function Dialog() {
 
-
+	debugger
 	const user = useSelector(state => state.users.profile.name);
 
   const chats = useSelector(state => state.users.profile.chats);

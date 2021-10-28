@@ -10,13 +10,13 @@ export const CHANGE_USER_NAME_IN_STORE = 'USERS::CHANGE_USER_NAME_IN_STORE';
 
 const usersDataBaseRef = ref(db, 'users/');
 
-export const createUsersState = (authed) => (dispatch) => {
+export const createUsersState = (authed, allChats) => (dispatch) => {
   if (authed) {
     onValue(usersDataBaseRef, (snapshot) => {
       const payload = snapshot.val();
       dispatch(setUsers(payload));
       dispatch(setProfileAndBuddies());
-      dispatch(setChats());
+      dispatch(setChats(allChats));
     })
   }
 }
@@ -30,8 +30,9 @@ export const setProfileAndBuddies = () => ({
   type: SET_PROFILE_AND_BUDDIES
 });
 
-export const setChats = () => ({
+export const setChats = (payload) => ({
   type: SET_CHATS,
+  payload
 })
 
 export const clearUsersStore = () => ({
