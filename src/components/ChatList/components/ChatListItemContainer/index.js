@@ -16,8 +16,9 @@ export default function ChatListItem({chat}) {
   
 
   const deleteBuddy = async () => {
-    await remove(ref(db, 'users/' + profile.id + '/chats/' + chat.id));
-
+    debugger
+	  console.log(chat);
+  	await remove(ref(db, 'users/' + profile.id + '/chats/' + chat.profileChatId));
   }
 
 

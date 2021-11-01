@@ -16,12 +16,11 @@ import { set, ref, push } from "firebase/database";
 
 export default function Dialog() {
 
-	debugger
 	const user = useSelector(state => state.users.profile.name);
 
   const chats = useSelector(state => state.users.profile.chats);
 
-  function getCurrentChatById(id) {
+  function getCurrentChatByBuddyId(id) {
     let currentChat = {};
     chats.forEach(chat => {
       if (chat.buddy.id === id) {
@@ -32,7 +31,7 @@ export default function Dialog() {
   }
   const { buddyId } = useParams();
 
-  const currentChat = getCurrentChatById(buddyId);
+  const currentChat = getCurrentChatByBuddyId(buddyId);
 
   const buddyName = currentChat.buddy.name;
 

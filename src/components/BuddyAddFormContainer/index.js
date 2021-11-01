@@ -25,27 +25,6 @@ export default function BuddyAddForm() {
     }
   }, [buddies]);
 
-	// const createNewChat = async (email) => {
-	// 	const newDialogRef = push(child(ref(db), 'dialogs'));
-	// 	const buddy = Object.assign({}, findBuddy(email));
-	// 	delete buddy.chats;
-	// 	const profileForBuddy = Object.assign({}, profile);
-	// 	delete profileForBuddy.chats;
-	// 	const newProfileChatRef = push(ref(db, 'users/' + profile.id + '/chats'));
-	// 	const newBuddyChatRef = push(ref(db, 'users/' + buddy.id + '/chats'));
-	// 	const profileChat = {
-	// 		buddy,
-	// 		dialogId: newDialogRef.key,
-	// 		chatId: newProfileChatRef.key
-	// 	}
-	// 	const buddyChat = {
-	// 		buddy: profileForBuddy,
-	// 		dialogId: newDialogRef.key,
-	// 		chatId: newProfileChatRef.key
-	// 	}
-	// 	await set(newProfileChatRef, profileChat);
-	// 	await set(newBuddyChatRef, buddyChat);
-	// }
 
   const createNewChat = async (email) => {
 	  const newDialogRef = push(child(ref(db), 'dialogs'));

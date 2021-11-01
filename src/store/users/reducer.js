@@ -32,11 +32,11 @@ export const usersReducer = (state = initialState, action) => {
         state.profile.chats = [];
       } else {
         let chatList = [];
-        const chatLinks = Object.values(state.profile.chats);
+        const profileChats = state.profile.chats;
         let allChats = action.payload;
-        chatLinks.forEach(profileChat => {
+        for (let profileChat in profileChats) {
           allChats.forEach(chat => {
-            if (chat.chatId === profileChat) {
+            if (chat.chatId === profileChats[profileChat]) {
               let buddyId = '';
               if (state.profile.id === chat.user1) {
                 buddyId = chat.user2;
@@ -51,6 +51,7 @@ export const usersReducer = (state = initialState, action) => {
                 }
               })
               let chatModified = {
+                profileChatId: profileChat,
                 id: chat.chatId,
                 buddy: currentBuddy,
                 dialogId: chat.dialogId,
@@ -58,7 +59,7 @@ export const usersReducer = (state = initialState, action) => {
               chatList.push(chatModified);
             }
           });
-        })
+        }
         state.profile.chats = chatList;
       }
       return state;
