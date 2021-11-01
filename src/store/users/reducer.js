@@ -27,13 +27,16 @@ export const usersReducer = (state = initialState, action) => {
       }
       state.buddies = Object.values(list); // нужен для проверки перехода по ссылке в App.js (:id);
       return state;
-    case SET_CHATS: 
+    case SET_CHATS:
       if (!state.profile.chats) {
         state.profile.chats = [];
       } else {
         let chatList = [];
         const profileChats = state.profile.chats;
         let allChats = action.payload;
+        if (allChats.length === 0) {
+          return state;
+        }
         for (let profileChat in profileChats) {
           allChats.forEach(chat => {
             if (chat.chatId === profileChats[profileChat]) {

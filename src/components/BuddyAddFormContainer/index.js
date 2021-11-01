@@ -17,6 +17,8 @@ export default function BuddyAddForm() {
 
   const profile = useSelector(state => state.users.profile);
 
+  const chats = useSelector(state => state.chats);
+
   const findBuddyId = useCallback(email => {
     for (let buddy of buddies) {
       if (buddy.email === email) {
@@ -25,33 +27,51 @@ export default function BuddyAddForm() {
     }
   }, [buddies]);
 
+  function checkExistingOfChat(profile, buddy, chats) {
+  	chats.forEach(chat => {
+  		if (chat.user1 === profile) {
+  			if (chat.user2 === buddy) {
+  				return chat.chatId;
+			  }
+		  }
+  		if (chat.user2 === profile) {
+  			if (chat.user1 === buddy) {
+  				return chat.chatId;
+			  }
+		  }
+	  })
+  }
 
   const createNewChat = async (email) => {
 	  const newDialogRef = push(child(ref(db), 'dialogs'));
 	  const newChatRef = push(child(ref(db), 'chats'));
-    const buddyId = findBuddyId(email);
+
+	  const buddyId = findBuddyId(email);
     if (!buddyId) {
     	alert('такой e-mail не зарегистрирован');
     	return
     }
+
     const profileNewChatRef = push(ref(db, 'users/' + profile.id + '/chats'));
 	  const buddyNewChatRef = push(ref(db, 'users/' + buddyId + '/chats'));
-    const chat = {
-      user1: profile.id,
-	    user2: buddyId,
-      dialogId: newDialogRef.key,
-      chatId: newChatRef.key,
+	  let chat = checkExistingOfChat(profile.id, buddyId, chats);
+    if (chat) {
+	    await set(profileNewChatRef, newChatRef.key);
+  } else {
+	    chat = {
+		    user1: profile.id,
+		    user2: buddyId,
+		    dialogId: newDialogRef.key,
+		    chatId: newChatRef.key,
+	    }
+	    await set(newChatRef, chat);
+	    await set(buddyNewChatRef, newChatRef.key);
+	    await set(profileNewChatRef, newChatRef.key);
     }
-    await set(newChatRef, chat);
-	  await set(buddyNewChatRef, newChatRef.key);
-	  await set(profileNewChatRef, newChatRef.key);
   }
 
 	const [id, setId] = useState('');
 	const dispatch = useDispatch();
-	const addBuddy = useCallback( () => {
-
-	}, [dispatch, id]);
 
 
 	const handleId = (event) => {
@@ -60,7 +80,6 @@ export default function BuddyAddForm() {
 
 	const add = () => {
     createNewChat(id)
-		addBuddy(id);
 		setId('');
 	}
 

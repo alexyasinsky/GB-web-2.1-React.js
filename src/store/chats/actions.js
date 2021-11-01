@@ -13,8 +13,10 @@ export const setChats = (payload) => ({
 export const createChatsState = (authed) => (dispatch) => {
 	if (authed) {
 		onValue(chatsDataBaseRef, snapshot => {
-			const payload = Object.values(snapshot.val());
-			dispatch(setChats(payload));
+			if(snapshot.exists()) {
+				const payload = Object.values(snapshot.val());
+				dispatch(setChats(payload));
+			}
 		})
 	}
 }
