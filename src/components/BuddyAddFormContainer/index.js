@@ -17,7 +17,7 @@ export default function BuddyAddForm() {
 
   const profile = useSelector(state => state.users.profile);
 
-  const chats = useSelector(state => state.chats);
+  const chats = useSelector(state => state.users.chatlist);
 
   const findBuddyId = useCallback(email => {
     for (let buddy of buddies) {
@@ -28,24 +28,25 @@ export default function BuddyAddForm() {
   }, [buddies]);
 
   function checkExistingOfChat(profile, buddy, chats) {
+    let id = '';
   	chats.forEach(chat => {
   		if (chat.user1 === profile) {
   			if (chat.user2 === buddy) {
-  				return chat.chatId;
+  			  id = chat.chatId;
 			  }
 		  }
   		if (chat.user2 === profile) {
   			if (chat.user1 === buddy) {
-  				return chat.chatId;
+  				id = chat.chatId;
 			  }
 		  }
 	  })
+    return id;
   }
 
   const createNewChat = async (email) => {
 	  const newDialogRef = push(child(ref(db), 'dialogs'));
 	  const newChatRef = push(child(ref(db), 'chats'));
-
 	  const buddyId = findBuddyId(email);
     if (!buddyId) {
     	alert('такой e-mail не зарегистрирован');
@@ -54,11 +55,11 @@ export default function BuddyAddForm() {
 
     const profileNewChatRef = push(ref(db, 'users/' + profile.id + '/chats'));
 	  const buddyNewChatRef = push(ref(db, 'users/' + buddyId + '/chats'));
-	  let chat = checkExistingOfChat(profile.id, buddyId, chats);
-    if (chat) {
-	    await set(profileNewChatRef, newChatRef.key);
+	  const chatId = checkExistingOfChat(profile.id, buddyId, chats);
+    if (chatId) {
+	    await set(profileNewChatRef, chatId);
   } else {
-	    chat = {
+	    const chat = {
 		    user1: profile.id,
 		    user2: buddyId,
 		    dialogId: newDialogRef.key,

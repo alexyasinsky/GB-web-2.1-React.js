@@ -7,12 +7,12 @@ import { useSelector } from "react-redux";
 
 
 export default function ChatList() {
-
-  const chatList = useSelector(state => state.users.profile.chats);
-
-	return (
-		chatList.map((chat) =>
-			<ChatListItem key={chat.id} chat={chat}/>
-		)
-	)
+  let chatlist = useSelector(state => state.users.profile.chats);
+  if (chatlist) {
+    return (
+      chatlist.map((chat) =>
+        <ChatListItem key={chat.id} chat={chat}/>
+      )
+    )
+  } else return ('');
 }

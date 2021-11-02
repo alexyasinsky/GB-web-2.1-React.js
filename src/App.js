@@ -44,14 +44,8 @@ const App = () => {
 		})
 	}, []);
 
-	useEffect(()=> {
-		dispatch(createChatsState(authed));
-	}, [dispatch, authed])
-
-	const allChats = useSelector(state => state.chats);
-
   useEffect(()=> {
-    dispatch(createUsersState(authed, allChats));
+    dispatch(createUsersState(authed));
   }, [dispatch, authed])
 
 
