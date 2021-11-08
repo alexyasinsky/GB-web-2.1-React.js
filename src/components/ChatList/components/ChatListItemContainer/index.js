@@ -5,7 +5,7 @@ import { useSelector} from "react-redux";
 import ChatListItemComp from './components/ChatListItemComp';
 
 import { db } from '../../../../api';
-import { ref, onValue, remove } from "firebase/database";
+import { ref, remove } from "firebase/database";
 
 
 

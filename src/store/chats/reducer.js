@@ -1,7 +1,4 @@
-import {
-	SET_CHATS,
-	SET_USER_CHAT_LIST_DATA
-} from "./actions";
+import { SET_CHATS } from "./actions";
 
 
 const initialState = [];
