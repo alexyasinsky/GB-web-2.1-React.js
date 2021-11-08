@@ -5,13 +5,11 @@ import { messagesReducer} from "./messages";
 import { beerReducer } from './beer';
 import thunk from 'redux-thunk';
 import storage from 'redux-persist/lib/storage/session';
-import {chatsReducer} from "./chats/reducer";
 
 const rootReducer = combineReducers({
 	users: usersReducer,
 	messages: messagesReducer,
-	beer: beerReducer,
-	chats: chatsReducer
+	beer: beerReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
