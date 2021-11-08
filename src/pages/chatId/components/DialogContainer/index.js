@@ -46,8 +46,6 @@ export default function Dialog() {
 
 	const messages = useSelector(state => state.messages);
 
-  console.log(messages);
-
 	useEffect(() => {
 		if (messages.length > 0) {
 			setVisible(false);
