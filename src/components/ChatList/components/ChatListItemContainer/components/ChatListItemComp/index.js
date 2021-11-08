@@ -14,7 +14,7 @@ export default function ChatListItemComp({chat, deleteBuddy}) {
 					primary={buddy.name}
 				/>
 			</NavLink>
-      <NavLink key={buddy.id} to={`/chats/`} >
+      <NavLink key={buddy.id+'button'} to={`/chats/`} >
 			<ListItemSecondaryAction onClick={deleteBuddy}>
 				<IconButton
 					edge="end"

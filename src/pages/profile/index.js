@@ -24,10 +24,6 @@ export default function Profile() {
 		const auth = getAuth();
 		signOut(auth).then(() => {
       dispatch(clearUsersStore());
-			console.log('sign out successful');
-		})
-    .catch((error) => {
-			console.log('sign out failed')
 		});
 	}
 
@@ -35,15 +31,11 @@ export default function Profile() {
 
   const profileId = profile?.id;
 
-  console.log(profileId);
-
   const [userName, setUserName] = useState('');
 
   const handleUserName = (event) => {
     setUserName(event.target.value);
   }
-
-  console.log(userName);
 
   const [cardIsVisible, setCardVisible] = useState(true);
 
