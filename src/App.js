@@ -23,7 +23,6 @@ import {PrivateRoute} from "./hocs/PrivateRoute";
 import {PublicRoute} from "./hocs/PublicRoute";
 
 import { createUsersState } from './store/users/actions';
-import { createChatsState } from './store/chats/actions';
 import { useDispatch } from 'react-redux';
 
 

@@ -4,13 +4,13 @@ import { useParams } from 'react-router-dom';
 import MessageList from "./components/MessageListComp";
 import Form from "./components/FormContainer";
 
-import {useEffect, useState, useMemo } from "react";
+import {useEffect, useState } from "react";
 
 import './style.scss';
 import {useSelector, useDispatch } from "react-redux";
 import { initMessagesList } from '../../../../store/messages/actions';
 
-import { db } from '../../../../api/firebase';
+import { db } from '../../../../api';
 import { set, ref, push } from "firebase/database";
 
 
@@ -42,7 +42,7 @@ export default function Dialog() {
 
   useEffect(()=> {
     dispatch(initMessagesList(currentChat.dialogId));
-  }, [currentChat]);
+  }, [dispatch, currentChat]);
 
 	const messages = useSelector(state => state.messages);
 

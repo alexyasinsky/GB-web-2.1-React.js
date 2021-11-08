@@ -1,5 +1,5 @@
-import { db } from '../../api/firebase';
-import { ref, onValue, update } from "firebase/database";
+import { db } from '../../api';
+import { ref, onValue } from "firebase/database";
 
 
 // export const ADD_MESSAGE = 'MESSAGES::ADD_MESSAGE';

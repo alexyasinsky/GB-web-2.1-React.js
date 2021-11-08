@@ -17,7 +17,7 @@ export default function MessageListItem (props) {
 		} else {
 			setItemClass('message-item_buddy');
 		}
-	}, [message])
+	}, [message, profile.name])
 
 
 	return (

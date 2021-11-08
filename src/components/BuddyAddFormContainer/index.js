@@ -2,10 +2,10 @@
 import {useCallback, useState} from 'react';
 
 
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import BuddyAddFormComp from './components/BuddyAddFromComp';
 
-import { db } from '../../api/firebase';
+import { db } from '../../api';
 import { set, ref, push, child } from "firebase/database";
 
 import './style.scss';
@@ -72,7 +72,6 @@ export default function BuddyAddForm() {
   }
 
 	const [id, setId] = useState('');
-	const dispatch = useDispatch();
 
 
 	const handleId = (event) => {
