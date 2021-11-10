@@ -4,7 +4,14 @@ export default function BuddyAddFormComp({onChange, addFunction, value}) {
   return (
 		<Grid container spacing={1}>
 			<Grid item>
-				<TextField name='id' className='buddy-add__input' value={value} onChange={onChange} label="Введите идентификатор" variant="outlined" />
+				<TextField 
+          name='id' 
+          className='buddy-add__input' 
+          value={value} 
+          onChange={onChange} 
+          label="Введите e-mail" 
+          variant="outlined" 
+        />
 			</Grid>
 			<Grid item>
 				<Button variant="contained"

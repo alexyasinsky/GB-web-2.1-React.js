@@ -3,7 +3,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   label {
     font-size: 18px;
+  }
+  &__highlight {
+    font-size: 36px;
   }
 }

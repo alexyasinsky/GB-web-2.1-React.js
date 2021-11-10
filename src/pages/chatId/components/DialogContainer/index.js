@@ -4,55 +4,59 @@ import { useParams } from 'react-router-dom';
 import MessageList from "./components/MessageListComp";
 import Form from "./components/FormContainer";
 
-import {useEffect, useState, useMemo } from "react";
+import {useEffect, useState } from "react";
 
 import './style.scss';
 import {useSelector, useDispatch } from "react-redux";
-import {addMessageWithThunk} from "../../../../store/messages/actions";
-import {getMessages} from "../../../../store/messages/selectors";
-import {getProfileName} from "../../../../store/profile/selectors";
+import { initMessagesList } from '../../../../store/messages/actions';
+
+import { db } from '../../../../api';
+import { set, ref, push } from "firebase/database";
+
 
 export default function Dialog() {
 
-	const user = useSelector(getProfileName);
+	const user = useSelector(state => state.users.profile.name);
+
+  const chats = useSelector(state => state.users.profile.chats);
+
+  function getCurrentChatByBuddyId(id) {
+    let currentChat = {};
+    chats.forEach(chat => {
+      if (chat.buddy.id === id) {
+        currentChat = chat;
+      }
+    });
+    return currentChat;
+  }
+  const { buddyId } = useParams();
+
+  const currentChat = getCurrentChatByBuddyId(buddyId);
+
+  const buddyName = currentChat.buddy.name;
 
 	const [isDefaultMessageVisible, setVisible] = useState(true);
 	const [chatClass, setChatClass] = useState('chat chat_empty');
 
-	const chatList = useSelector(state => state.chats);
+  const dispatch = useDispatch();
 
-	const { buddyId } = useParams();
+  useEffect(()=> {
+    dispatch(initMessagesList(currentChat.dialogId));
+  }, [dispatch, currentChat]);
 
-	const dispatch = useDispatch();
-	const messages = useSelector(getMessages);
-
-	const messageList = useMemo(() => {
-		return messages[buddyId] || [];
-	}, [messages, buddyId]);
-
-	function getBuddyNameById (id, list) {
-		let name = '';
-		list.forEach(chat => {
-			if (chat.id === id) {
-				name = chat.name;
-			}
-		});
-		return name;
-	}
-
-	const buddyName = getBuddyNameById(buddyId, chatList);
+	const messages = useSelector(state => state.messages);
 
 	useEffect(() => {
-		if (messageList.length > 0) {
+		if (messages.length > 0) {
 			setVisible(false);
 			setChatClass('chat');
 		}
-	}, [messageList])
+	}, [messages])
 
-
-	function handleSubmit(message) {
-		dispatch(addMessageWithThunk(buddyId, message, user, buddyName));
-	}
+  const addMessage = async (message) => {
+    const newMessageRef = push(ref(db, 'dialogs/' + currentChat.dialogId));
+    await set(newMessageRef, message)
+  }
 
 	return (
 		<>
@@ -78,11 +82,14 @@ export default function Dialog() {
 						: ''
 					}
 					<List>
-						<MessageList list={messageList}/>
+						<MessageList list={messages}/>
 					</List>
 				</div>
 			</Paper>
-			<Form handler={handleSubmit} user={user} />
+			<Form 
+        handler={addMessage} 
+        user={user} 
+      />
 		</>
 	)
 }

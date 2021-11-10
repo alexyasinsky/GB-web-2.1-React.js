@@ -1,0 +1,41 @@
+.profile {
+  &__card {
+    display: flex;
+    width: 600px;
+    img {
+      border-radius: 50%;
+      width: 200px;
+    }
+  }
+  &__content {
+    margin-left: 40px;
+    p {
+      margin: 20px 0;
+      font-size: 24px;
+      text-align: left;
+      span {
+        font-style: italic;
+        color: #3f51b5;
+      }
+      &:last-of-type {
+        margin-bottom: 30px;
+      }
+    }
+    Button {
+      width: 300px;
+    }
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    input {
+      width: 400px;
+    }
+  }
+  &__inputBox {
+    margin-bottom: 40px;
+    button {
+      margin-left: 30px;
+    }
+  }
+}

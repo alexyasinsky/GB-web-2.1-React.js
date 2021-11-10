@@ -2,7 +2,10 @@ import {ListItem, Avatar, ListItemText, ListItemSecondaryAction, IconButton} fro
 import DeleteIcon from '@material-ui/icons/Delete';
 import { NavLink } from "react-router-dom";
 
-export default function ChatListItemComp({buddy, deleteItem}) {
+export default function ChatListItemComp({chat, deleteBuddy}) {
+  
+  const buddy = chat.buddy;
+
   return (
     <ListItem button>
 			<NavLink key={buddy.id} to={`/chats/${buddy.id}`} className='chats__link'>
@@ -11,7 +14,8 @@ export default function ChatListItemComp({buddy, deleteItem}) {
 					primary={buddy.name}
 				/>
 			</NavLink>
-			<ListItemSecondaryAction onClick={deleteItem}>
+      <NavLink key={buddy.id+'button'} to={`/chats/`} >
+			<ListItemSecondaryAction onClick={deleteBuddy}>
 				<IconButton
 					edge="end"
 					aria-label="delete"
@@ -19,6 +23,7 @@ export default function ChatListItemComp({buddy, deleteItem}) {
 					<DeleteIcon />
 				</IconButton>
 			</ListItemSecondaryAction>
+      </NavLink>
 		</ListItem>
   )
 }

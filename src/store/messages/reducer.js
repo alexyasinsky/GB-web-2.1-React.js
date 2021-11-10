@@ -1,25 +1,12 @@
-import { ADD_MESSAGE } from "./actions";
+import { SET_MESSAGES_LIST } from "./actions";
 
-const initialState = {
-	messagesList: {},
-}
+const initialState = [];
 
 export const messagesReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case ADD_MESSAGE:
-			const currentList = state.messagesList[action.id] || [];
-			return {
-				...state,
-				messagesList: {
-					...state.messagesList,
-					[action.id]: [
-						...currentList,
-						{
-							...action.message,
-						}
-					]
-				},
-			}
+    case SET_MESSAGES_LIST:
+      state = action.messagesList;
+      return state;
 		default:
 			return state;
 	}
