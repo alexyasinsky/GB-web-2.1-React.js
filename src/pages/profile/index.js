@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { clearUsersStore } from '../../store/users/actions';
 import { changeUserName } from '../../store/users/actions';
 import { useCallback, useState } from 'react';
+import {getProfile} from "../../store/users/selectors";
 
 
 
@@ -27,8 +28,8 @@ export default function Profile() {
 		});
 	}
 
-  const profile = useSelector(state => state.users.profile);
-
+  const profile = useSelector(getProfile);
+	console.log(profile);
   const profileId = profile?.id;
 
   const [userName, setUserName] = useState('');

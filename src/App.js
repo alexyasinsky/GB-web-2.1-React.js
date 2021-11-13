@@ -24,6 +24,7 @@ import {PublicRoute} from "./hocs/PublicRoute";
 
 import { createUsersState } from './store/users/actions';
 import { useDispatch } from 'react-redux';
+import {getBuddies} from "./store/users/selectors";
 
 
 
@@ -48,7 +49,7 @@ const App = () => {
   }, [dispatch, authed])
 
 
-	const buddyList = useSelector(state => state.users.buddies);
+	const buddyList = useSelector(getBuddies);
 
   let buddyIds = [];
 

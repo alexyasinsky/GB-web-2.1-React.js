@@ -3,11 +3,12 @@ import {useEffect, useState} from "react";
 
 import './style.scss'
 import {useSelector} from "react-redux";
+import {getProfile} from "../../../../../../../../store/users/selectors";
 
 
 export default function MessageListItem (props) {
 
-	const profile = useSelector(state => state.users.profile);
+	const profile = useSelector(getProfile);
   const message = props.message;
 	const [itemClass, setItemClass] = useState('');
 
