@@ -12,13 +12,15 @@ import { initMessagesList } from '../../../../store/messages/actions';
 
 import { db } from '../../../../api';
 import { set, ref, push } from "firebase/database";
+import {getChatlist, getProfileName} from "../../../../store/users/selectors";
+import {getMessages} from "../../../../store/messages/selectors";
 
 
 export default function Dialog() {
 
-	const user = useSelector(state => state.users.profile.name);
+	const user = useSelector(getProfileName);
 
-  const chats = useSelector(state => state.users.profile.chats);
+  const chats = useSelector(getChatlist);
 
   function getCurrentChatByBuddyId(id) {
     let currentChat = {};
@@ -44,7 +46,7 @@ export default function Dialog() {
     dispatch(initMessagesList(currentChat.dialogId));
   }, [dispatch, currentChat]);
 
-	const messages = useSelector(state => state.messages);
+	const messages = useSelector(getMessages);
 
 	useEffect(() => {
 		if (messages.length > 0) {

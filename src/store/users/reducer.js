@@ -3,8 +3,7 @@
 import { 
   SET_CHATLIST,
   SET_USERS, 
-  SET_PROFILE_AND_BUDDIES, 
-  // SET_PROFILE_CHATS,
+  SET_PROFILE_AND_BUDDIES_AND_CHATS,
   CLEAR_USERS_STORE, 
   CHANGE_USER_NAME_IN_STORE,
 } from './actions';
@@ -20,7 +19,7 @@ export const usersReducer = (state = initialState, action) => {
     case SET_USERS:
       state.users = action.payload;
       return state;
-    case SET_PROFILE_AND_BUDDIES:
+    case SET_PROFILE_AND_BUDDIES_AND_CHATS:
       let list = Object.assign({}, state.users);
       const profileUser = action.payload;
       for (let item in list) {
