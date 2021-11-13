@@ -6,7 +6,9 @@ export function FormComp ({onSubmit }) {
   
   const inputRef = useRef(null);
 	useEffect(() => {
-		inputRef.current?.message.focus();
+		if (inputRef.current.message) {
+		  inputRef.current.message.focus();
+    }
 	});
 
   return (
@@ -28,6 +30,7 @@ export function FormComp ({onSubmit }) {
                   color="primary"
                   endIcon={<Icon>send</Icon>}
                   type='submit'
+                  data-testid={'submitButton'}
           >Отправить
           </Button>
         </Grid>
