@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { useSelector } from "react-redux";
 import { getAuth, signOut } from "firebase/auth";
 
@@ -13,10 +13,13 @@ import { useDispatch } from 'react-redux';
 import { clearUsersStore } from '../../store/users/actions';
 import { changeUserName } from '../../store/users/actions';
 import { useCallback, useState } from 'react';
+import {getProfile} from "../../store/users/selectors";
 
 
 
-export default function Profile() {
+export default React.memo(Profile);
+
+function Profile() {
 
   const dispatch = useDispatch();
 
@@ -27,7 +30,7 @@ export default function Profile() {
 		});
 	}
 
-  const profile = useSelector(state => state.users.profile);
+  const profile = useSelector(getProfile);
 
   const profileId = profile?.id;
 

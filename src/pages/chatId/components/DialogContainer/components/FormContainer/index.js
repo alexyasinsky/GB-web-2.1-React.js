@@ -1,9 +1,6 @@
 import { FormComp } from './components/FormComp';
 
-export default function Form(props) {
-  const handler = props.handler;
-	const user = props.user;
-
+export default function Form({handler, user}) {
 
 	function createMessage(event) {
 		event.preventDefault();
@@ -15,7 +12,6 @@ export default function Form(props) {
 		event.target.message.value = '';
 		handler(newMessage);
 	}
-
 
 	return (
     <FormComp

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Area from "../../components/Area";
 import {Button} from "@material-ui/core";
 
@@ -8,8 +10,10 @@ import './style.scss';
 import { useEffect } from 'react';
 import {getRandomBeer} from "../../store/beer/selectors";
 
+// eslint-disable-next-line no-undef
+export default React.memo(Beer);
 
-export function Beer() {
+function Beer() {
 
   const dispatch = useDispatch();
 

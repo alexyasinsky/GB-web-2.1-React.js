@@ -1,27 +1,25 @@
-import { db } from '../../api/firebase';
+import { db } from '../../api';
 import { ref, onValue, update  } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 export const SET_CHATLIST = 'USERS::SET_CHATLIST';
 export const SET_USERS = 'USERS::SET_USERS';
-export const SET_PROFILE_AND_BUDDIES = 'USERS::SET_PROFILE_AND_BUDDIES';
-// export const SET_PROFILE_CHATS = 'USERS::SET_PROFILE_CHATS';
+export const SET_PROFILE_AND_BUDDIES_AND_CHATS = 'USERS::SET_PROFILE_AND_BUDDIES_AND_CHATS';
 export const CLEAR_USERS_STORE = 'USERS::CLEAR_USERS_STORE';
 export const CHANGE_USER_NAME_IN_STORE = 'USERS::CHANGE_USER_NAME_IN_STORE';
 
 const usersDataBaseRef = ref(db, 'users/');
 const chatsDataBaseRef = ref(db, 'chats/');
 
-export const  createUsersState = (authed, allChats) => (dispatch) => {
+export const  createUsersState = (authed) => (dispatch) => {
   if (authed) {
     onValue(chatsDataBaseRef, snapshot => {
         if (snapshot.exists()) {
           const payload = Object.values(snapshot.val());
-          dispatch(setChatList(payload));
+          dispatch(setChatlist(payload));
         } else {
-          dispatch(setChatList([]));
+          dispatch(setChatlist([]));
         }
-				
 			}
 		)
     onValue(usersDataBaseRef, (snapshot) => {
@@ -30,32 +28,26 @@ export const  createUsersState = (authed, allChats) => (dispatch) => {
         const user = auth.currentUser;
         const payload = snapshot.val();
         dispatch(setUsers(payload));
-        dispatch(setProfileAndBuddies(user));
-        // dispatch(setProfileChats());
+        dispatch(setProfileAndBuddiesAndChats(user));
       }
     })
   }
 }
 
-export const setChatList = (payload) => ({
+export const setChatlist = (payload) => ({
   type: SET_CHATLIST,
   payload
 })
-
 
 export const setUsers = (payload) => ({
   type: SET_USERS,
   payload
 });
 
-export const setProfileAndBuddies = (payload) => ({
-  type: SET_PROFILE_AND_BUDDIES,
+export const setProfileAndBuddiesAndChats = (payload) => ({
+  type: SET_PROFILE_AND_BUDDIES_AND_CHATS,
   payload
 });
-
-// export const setProfileChats = () => ({
-//   type: SET_PROFILE_CHATS
-// })
 
 export const clearUsersStore = () => ({
   type: CLEAR_USERS_STORE

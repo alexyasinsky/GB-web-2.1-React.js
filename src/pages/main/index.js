@@ -1,9 +1,12 @@
+import React from 'react';
+
 import Area from '../../components/Area';
 
 import './style.scss';
 
+export default React.memo(Main);
 
-export default function Main() {
+function Main() {
 
   return (
     <Area>

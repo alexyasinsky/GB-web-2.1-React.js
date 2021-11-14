@@ -6,11 +6,13 @@ export function FormComp ({onSubmit }) {
   
   const inputRef = useRef(null);
 	useEffect(() => {
-		inputRef.current?.message.focus();
+		if (inputRef.current.message) {
+		  inputRef.current.message.focus();
+    }
 	});
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} ref={inputRef}>
       <Grid container spacing={1} direction='column'>
         <Grid item>
           <TextField
@@ -20,6 +22,7 @@ export function FormComp ({onSubmit }) {
             multiline
             rows={4}
             variant="outlined"
+
           />
         </Grid>
         <Grid item>
@@ -27,6 +30,7 @@ export function FormComp ({onSubmit }) {
                   color="primary"
                   endIcon={<Icon>send</Icon>}
                   type='submit'
+                  data-testid={'submitButton'}
           >Отправить
           </Button>
         </Grid>

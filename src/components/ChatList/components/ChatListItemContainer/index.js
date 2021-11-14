@@ -6,13 +6,14 @@ import ChatListItemComp from './components/ChatListItemComp';
 
 import { db } from '../../../../api';
 import { ref, remove } from "firebase/database";
+import {getProfile} from "../../../../store/users/selectors";
 
 
 
 
 export default function ChatListItem({chat}) {
 
-  const profile = useSelector(state => state.users.profile);
+  const profile = useSelector(getProfile);
   
 
   const deleteBuddy = async () => {

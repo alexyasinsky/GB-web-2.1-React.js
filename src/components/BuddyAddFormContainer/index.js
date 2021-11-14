@@ -3,6 +3,7 @@ import {useCallback, useState} from 'react';
 
 
 import { useSelector} from "react-redux";
+import { getProfile, getBuddies, getChatlist } from "../../store/users/selectors";
 import BuddyAddFormComp from './components/BuddyAddFromComp';
 
 import { db } from '../../api';
@@ -13,11 +14,9 @@ import './style.scss';
 export default function BuddyAddForm() {
 
 
-  const buddies = useSelector(state => state.users.buddies);
-
-  const profile = useSelector(state => state.users.profile);
-
-  const chats = useSelector(state => state.users.chatlist);
+  const buddies = useSelector(getBuddies);
+  const profile = useSelector(getProfile);
+  const chats = useSelector(getChatlist);
 
   const findBuddyId = useCallback(email => {
     for (let buddy of buddies) {
