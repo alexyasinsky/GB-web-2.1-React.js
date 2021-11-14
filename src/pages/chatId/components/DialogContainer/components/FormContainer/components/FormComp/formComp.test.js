@@ -8,10 +8,8 @@ describe('formComp testing', () => {
 	});
 	test('проверка работы кнопки "Отправить"', () => {
 		const onSubmit = jest.fn(e => e.preventDefault());
-		const component = render(<FormComp onSubmit={onSubmit}/>);
-		fireEvent.click(component.getByTestId('submitButton'));
+		render(<FormComp onSubmit={onSubmit}/>);
+		fireEvent.click(screen.getByTestId('submitButton'));
 		expect(onSubmit).toBeCalled();
-
-
 	});
 })
