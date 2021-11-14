@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { useSelector } from "react-redux";
 import { getAuth, signOut } from "firebase/auth";
 
@@ -17,7 +17,9 @@ import {getProfile} from "../../store/users/selectors";
 
 
 
-export default function Profile() {
+export default React.memo(Profile);
+
+function Profile() {
 
   const dispatch = useDispatch();
 

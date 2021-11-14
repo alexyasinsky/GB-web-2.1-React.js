@@ -13,7 +13,7 @@ import Main from './pages/main';
 import Profile from './pages/profile';
 import Chats from './pages/chats';
 import ChatId from './pages/chatId';
-import {Beer} from "./pages/beer";
+import Beer from "./pages/beer";
 import Login from "./pages/login";
 
 import './style.scss';
